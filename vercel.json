@@ -3,7 +3,8 @@
   "name": "veloop-mining-rewards",
   "cleanUrls": true,
   "trailingSlash": false,
-  "headers": [
+"outputDirectory": ".dist",
+"headers": [
     {
       "source": "/(.*)",
       "headers": [
