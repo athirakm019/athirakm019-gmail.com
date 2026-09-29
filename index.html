@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VELOP Rewards — Mine & Earn + 10-Level Achievement Badge System</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/mining-banner.css" />
+  <link rel="stylesheet" href="css/badges.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+
+  <!-- Authentication Client & Route Guard -->
+  <script src="js/auth.js"></script>
+  <script>
+    // Route Protection: Unauthenticated visitors redirected to login
+    VeloopAuth.requireAuth('login.html');
+  </script>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="top-navbar">
+    <div class="app-container">
+      <div class="top-navbar-inner">
+        <!-- Brand Logo & Meta -->
+        <a href="#section-cover" class="brand-badge" data-goto-tab="cover">
+          <div class="brand-logo-gem">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="brand-meta">
+            <div class="brand-title">
+              VELOP REWARDS <span class="tag">UI/UX CASE STUDY</span>
+            </div>
+            <div class="brand-sub">Mine & Earn + 10-Tier Achievement System</div>
+          </div>
+        </a>
+
+        <!-- Quick Navbar Actions -->
+        <div class="nav-actions">
+          <button class="btn-pill-action" id="sfxToggleBtn" title="Toggle Futuristic Audio Synthesizer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <span>SFX: <span class="sfx-state">OFF</span></span>
+          </button>
+
+          <button class="btn-pill-action gold" data-goto-tab="prototype">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Live Prototype</span>
+          </button>
+
+          <!-- Authenticated User Profile Crest & Logout -->
+          <div class="navbar-user-crest" id="userCrestWidget" title="Active Miner Profile">
+            <div class="user-avatar-mini" id="userAvatarMini">VM</div>
+            <div class="user-meta-mini">
+              <span class="user-name-mini" id="userNameMini">Active Miner</span>
+              <span class="user-tier-tag" id="userTierMini">Recruit Miner</span>
+            </div>
+            <button class="btn-logout-crest" id="btnLogoutNav" title="Sign Out of Session" aria-label="Sign out">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky 10-Section Navigation Scroller -->
+  <nav class="section-nav-wrapper">
+    <div class="app-container">
+      <div class="section-nav-track">
+        <button class="nav-pill active" data-tab="cover">
+          <span class="pill-num">01</span> Cover
+        </button>
+        <button class="nav-pill" data-tab="research">
+          <span class="pill-num">02</span> Research & Inspiration
+        </button>
+        <button class="nav-pill" data-tab="mining-banner">
+          <span class="pill-num">03</span> Mining Banner
+        </button>
+        <button class="nav-pill" data-tab="responsive">
+          <span class="pill-num">04</span> Mining Banner Responsive
+        </button>
+        <button class="nav-pill" data-tab="design-system">
+          <span class="pill-num">05</span> Badge Design System
+        </button>
+        <button class="nav-pill" data-tab="achievements">
+          <span class="pill-num">06</span> Badge Collection
+        </button>
+        <button class="nav-pill" data-tab="badge-states">
+          <span class="pill-num">07</span> Badge States
+        </button>
+        <button class="nav-pill" data-tab="progression">
+          <span class="pill-num">08</span> Badge Progression
+        </button>
+        <button class="nav-pill" data-tab="prototype">
+          <span class="pill-num">09</span> Prototype & Previews
+        </button>
+        <button class="nav-pill" data-tab="handoff">
+          <span class="pill-num">10</span> Developer Handoff
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Presentation Body -->
+  <main class="app-container">
+
+    <!-- ====================================================================
+         01 — COVER SECTION
+         ==================================================================== -->
+    <section id="section-cover" class="case-section active">
+      <div class="section-header">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:var(--space-3);">
+          <div class="section-label" style="margin-bottom:0;">01 — Case Study Overview</div>
+          <span class="badge-tag gold">Task 11: Mining Banner + 10-Level Badge Design</span>
+          <span class="badge-tag blue">Figma Desktop Frame: 1440 × 1000</span>
+          <span class="badge-tag emerald">UI/UX Design Portfolio</span>
+        </div>
+        <h1 class="section-title" style="font-size: clamp(2.4rem, 4.5vw, 3.8rem); max-width: 980px;">
+          VELOOP Rewards — Mine & Earn + 10-Level Achievement Badge System
+        </h1>
+        <p class="section-desc" style="font-size: var(--text-lg); max-width: 840px;">
+          A premium, trustworthy, and futuristic rewards ecosystem engineered on dark slate (<code style="color:var(--text-gold);">#161827</code>). Uniting high-yield digital mining telemetry with collectible semi-3D metallic and gemstone heraldry.
+        </p>
+      </div>
+
+      <!-- Core Value Loop Presentation Card -->
+      <div class="card-glass" style="margin-bottom: var(--space-8); border-color: rgba(245, 158, 11, 0.3);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--space-4); margin-bottom:var(--space-6);">
+          <div>
+            <span class="badge-tag gold">THE VELOOP REWARD CYCLE</span>
+            <h3 style="font-family:var(--font-display); font-size:var(--text-2xl); margin-top:8px;">
+              Start → Mine → Earn VEs → Progress → Achieve → Unlock → Return
+            </h3>
+          </div>
+          <div style="display:flex; gap:var(--space-3);">
+            <button class="btn-primary" data-goto-tab="mining-banner">Explore Mining Banner</button>
+            <button class="btn-secondary" data-goto-tab="achievements">View 10 Badges</button>
+          </div>
+        </div>
+
+        <!-- 7-Stage Core Loop Grid -->
+        <div class="grid-4" style="grid-template-columns: repeat(7, 1fr); gap: var(--space-3);">
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">01</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Start</div>
+            <div style="font-size:11px; color:var(--text-secondary);">One-click activation</div>
+          </div>
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">02</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Mine</div>
+            <div style="font-size:11px; color:var(--text-secondary);">Quantum extraction</div>
+          </div>
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">03</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Earn VEs</div>
+            <div style="font-size:11px; color:var(--text-secondary);">Token stream</div>
+          </div>
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">04</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Progress</div>
+            <div style="font-size:11px; color:var(--text-secondary);">Tier tracking</div>
+          </div>
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">05</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Achieve</div>
+            <div style="font-size:11px; color:var(--text-secondary);">Milestone feats</div>
+          </div>
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">06</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Unlock</div>
+            <div style="font-size:11px; color:var(--text-secondary);">Prestige badges</div>
+          </div>
+          <div class="telemetry-tile" style="text-align:center;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold);">07</div>
+            <div style="font-weight:700; font-size:14px; margin:4px 0;">Return</div>
+            <div style="font-size:11px; color:var(--text-secondary);">Habit loop</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Pillars Summary -->
+      <div class="grid-3">
+        <div class="card-glass">
+          <div class="badge-tag blue" style="margin-bottom: var(--space-3);">PILLAR I</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-2);">Premium Fintech Trust</h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); line-height:1.6;">
+            Subtle metallic reflections, precise telemetry typography, deep navy/slate hues, and structured data hierarchy create institutional credibility without cartoonish gamification.
+          </p>
+        </div>
+
+        <div class="card-glass">
+          <div class="badge-tag gold" style="margin-bottom: var(--space-3);">PILLAR II</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-2);">Futuristic Mining Reactor</h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); line-height:1.6;">
+            Believable quantum extraction technology featuring magnetic containment rings, glowing VE coin generation, and live reward funnels instead of rustic pickaxes.
+          </p>
+        </div>
+
+        <div class="card-glass">
+          <div class="badge-tag emerald" style="margin-bottom: var(--space-3);">PILLAR III</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-2);">10-Tier Gemstone Heraldry</h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); line-height:1.6;">
+            A continuous progression path from Bronze entry to the mythic VELOOP Legend. 100% transparent background vector SVGs with escalating geometric complexity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         02 — RESEARCH & INSPIRATION
+         ==================================================================== -->
+    <section id="section-research" class="case-section">
+      <div class="section-header">
+        <div class="section-label">02 — Behavioral Science & UX Rationale</div>
+        <h2 class="section-title">Research & Inspiration Architecture</h2>
+        <p class="section-desc">
+          Balancing fintech credibility with game-inspired motivation requires rigorous behavioral design frameworks. Here is the cognitive foundation of VELOOP Rewards.
+        </p>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: var(--space-6);">
+        <!-- Gamification Principles -->
+        <div class="card-glass">
+          <span class="badge-tag purple" style="margin-bottom: var(--space-3);">BEHAVIORAL FRAMEWORK</span>
+          <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-3);">Gamification & The Octalysis Model</h3>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-4);">
+            The system applies Yu-kai Chou’s Octalysis Framework, targeting intrinsic White Hat drives to cultivate long-term organic retention:
+          </p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:var(--space-3); font-size:var(--text-sm);">
+            <li style="display:flex; gap:10px;">
+              <span style="color:var(--text-gold); font-weight:700;">•</span>
+              <div><strong>Core Drive 2 (Development & Accomplishment):</strong> The 10-level badge progression provides clear milestones that make incremental effort visible and prestigious.</div>
+            </li>
+            <li style="display:flex; gap:10px;">
+              <span style="color:var(--text-gold); font-weight:700;">•</span>
+              <div><strong>Core Drive 4 (Ownership & Possession):</strong> Users collect transparent, high-res achievement emblems and accrue VE tokens that unlock tangible staking and raffle utility.</div>
+            </li>
+            <li style="display:flex; gap:10px;">
+              <span style="color:var(--text-gold); font-weight:700;">•</span>
+              <div><strong>Core Drive 6 (Scarcity & Impatience):</strong> Locked tiers remain visible but muted, stimulating aspiration: <em>"I want to unlock the next badge."</em></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Reward Anticipation & Variable Schedules -->
+        <div class="card-glass">
+          <span class="badge-tag gold" style="margin-bottom: var(--space-3);">NEUROSCIENCE & ANTICIPATION</span>
+          <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-3);">Reward Anticipation & Dopamine Loops</h3>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-4);">
+            According to neurobiological reward research, dopamine surges highest during the <em>anticipation</em> phase rather than reward delivery itself:
+          </p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:var(--space-3); font-size:var(--text-sm);">
+            <li style="display:flex; gap:10px;">
+              <span style="color:var(--blue-cyan); font-weight:700;">•</span>
+              <div><strong>Dynamic Mining Telemetry:</strong> Showing the live countdown timer (<code>45:20 remaining</code>) and ticking VE counter (<code>+38 VEs</code>) creates continuous visual feedback.</div>
+            </li>
+            <li style="display:flex; gap:10px;">
+              <span style="color:var(--blue-cyan); font-weight:700;">•</span>
+              <div><strong>Milestone Proximity Effect:</strong> The progress tracker highlights <em>"2 more achievements to reach Platinum"</em>, leveraging the goal-gradient hypothesis.</div>
+            </li>
+            <li style="display:flex; gap:10px;">
+              <span style="color:var(--blue-cyan); font-weight:700;">•</span>
+              <div><strong>Claim Ritual:</strong> Transitioning from 100% complete to the green "Claim 50 VEs" CTA gives the user active agency in finalizing their reward.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 6 Core Design Principles Required by Assignment -->
+      <div class="card-glass" style="margin-bottom: var(--space-6);">
+        <span class="badge-tag gold" style="margin-bottom: var(--space-3);">DESIGN FOUNDATIONS</span>
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          The 6 Core Design Principles of VELOOP Rewards
+        </h3>
+        <div class="grid-3">
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:var(--text-gold); font-size:13px;">01. Progression</strong>
+              <span class="badge-tag" style="font-size:10px;">Escalator</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+              Visual escalator moving from low-friction beginner tasks to complex mastery. Users always see their exact step on the journey (Level 3 of 10) and next frontier.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:var(--text-gold); font-size:13px;">02. Status</strong>
+              <span class="badge-tag blue" style="font-size:10px;">Prestige</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+              Public signaling and tier differentiation. Distinct visual badges, profile frames, and exclusive perks allow users to signal their platform tenure and dedication.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:var(--text-gold); font-size:13px;">03. Rarity</strong>
+              <span class="badge-tag purple" style="font-size:10px;">Tier Scarcity</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+              Mathematical distribution where Level 01 Bronze represents top 100%, Gold top 15%, Master top 1%, and Level 10 Legend represents top 0.1% apex performers.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:var(--text-gold); font-size:13px;">04. Achievement</strong>
+              <span class="badge-tag emerald" style="font-size:10px;">Validation</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+              Objective-based criteria rather than arbitrary luck. Users earn badges through demonstrable metrics: hash yield, consecutive streaks, and extraction volume.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:var(--text-gold); font-size:13px;">05. Visual Hierarchy</strong>
+              <span class="badge-tag gold" style="font-size:10px;">Anatomy</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+              Strict heraldic evolution: base brushed metals (Bronze/Silver) evolve into faceted precious stones (Diamond/Emerald/Sapphire/Ruby) and culminated imperial crowns (Legend).
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:var(--text-gold); font-size:13px;">06. Reward Anticipation</strong>
+              <span class="badge-tag blue" style="font-size:10px;">Telemetry</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+              Dopamine pacing via micro-telemetry: live countdown (45:20 remaining), animated progress bar/ring, and real-time ticking VE rewards build palpable suspense.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Industry Benchmark & Inspiration Analysis -->
+      <div class="card-glass" style="margin-bottom: var(--space-6);">
+        <span class="badge-tag blue" style="margin-bottom: var(--space-3);">CROSS-INDUSTRY BENCHMARKS</span>
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          Industry Inspiration & Synthesis
+        </h3>
+        <div class="grid-5" style="gap: var(--space-3);">
+          <div class="telemetry-tile" style="padding: var(--space-3);">
+            <div style="font-weight:700; font-size:13px; color:#fff; margin-bottom:4px;">1. Fintech Platforms</div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-gold); margin-bottom:6px;">Revolut • Robinhood • Coinbase</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+              Adopted precision data telemetry, institutional slate background (#161827), and metallic card tiers for authentic financial credibility.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-3);">
+            <div style="font-weight:700; font-size:13px; color:#fff; margin-bottom:4px;">2. Gaming Systems</div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--blue-cyan); margin-bottom:6px;">PlayStation • Xbox • Steam</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+              Borrowed the iconic Platinum Trophy milestone psychology and transparent collectible badge display without cartoon casino graphics.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-3);">
+            <div style="font-weight:700; font-size:13px; color:#fff; margin-bottom:4px;">3. Fitness Tracking</div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--gem-emerald-light); margin-bottom:6px;">Apple Watch • Strava</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+              Implemented 3D metallic relief medallions and goal-gradient rings that reward consecutive mining streak consistency.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-3);">
+            <div style="font-weight:700; font-size:13px; color:#fff; margin-bottom:4px;">4. Productivity Apps</div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--purple-muted); margin-bottom:6px;">Duolingo • GitHub</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+              Employed loss-aversion streak preservation, habit loops, and clear next-tier distance indicators (e.g. 2 more achievements to Platinum).
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-3);">
+            <div style="font-weight:700; font-size:13px; color:#fff; margin-bottom:4px;">5. Luxury Loyalty</div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-gold); margin-bottom:6px;">Amex Centurion • Delta Medallion</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+              Synthesized natural gemstone rarity (Emerald, Sapphire, Ruby) and sovereign heraldry to confer genuine prestige on top-tier earners.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fintech vs Gaming Comparison Table -->
+      <div class="card-glass">
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          Fintech Visual Language vs Traditional Gaming Pitfalls
+        </h3>
+        <table class="tokens-spec-table">
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Common Gaming / Casino Pitfall (Avoided)</th>
+              <th>VELOOP Rewards Fintech Standard (Implemented)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Color Palette</strong></td>
+              <td>Neon green, hot pink, rainbow gradients, electric glare</td>
+              <td>Deep slate <code style="color:var(--text-gold);">#161827</code>, 24K warm gold, rhodium silver, deep forest emerald, royal sapphire, blood ruby</td>
+            </tr>
+            <tr>
+              <td><strong>Mining Visual</strong></td>
+              <td>Cartoon pickaxes, wooden minecarts, childish gems</td>
+              <td>Quantum magnetic confinement reactor, floating holographic VE coins, digital reward conduits</td>
+            </tr>
+            <tr>
+              <td><strong>Typography</strong></td>
+              <td>Chunky comic or arcade bubble fonts</td>
+              <td>Technical precision sans-serif (Space Grotesk + Plus Jakarta Sans + JetBrains Mono)</td>
+            </tr>
+            <tr>
+              <td><strong>Feedback & Motion</strong></td>
+              <td>Screen-shaking explosions, slot machine flashes, loud sirens</td>
+              <td>Subtle 120Hz smooth particle flow, harmonic Web Audio chimes, elegant specular sheen sweeps</td>
+            </tr>
+            <tr>
+              <td><strong>Badge Assets</strong></td>
+              <td>Flat sticker icons or badges trapped in dark square backgrounds</td>
+              <td>Scalable 100% transparent background vector SVGs with multi-layered 3D bevels</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         03 — MINING BANNER (INTERACTIVE SHOWCASE)
+         ==================================================================== -->
+    <section id="section-mining-banner" class="case-section">
+      <div class="section-header">
+        <div class="section-label">03 — Component Showcase</div>
+        <h2 class="section-title">Mine & Earn Banner</h2>
+        <p class="section-desc">
+          The flagship desktop card (410–450px height) engineered to immediately communicate <strong>“I can mine here and earn VEs.”</strong> Features an interactive state machine and quantum reactor environment.
+        </p>
+      </div>
+
+      <!-- State Switcher Control Toolbar -->
+      <div class="state-switcher-bar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); text-transform:uppercase;">
+            Switch Component State:
+          </span>
+          <div class="state-switcher-group">
+            <button class="state-btn" data-mining-state="default">1. Default (0%)</button>
+            <button class="state-btn" data-mining-state="hover">2. Hover Glow</button>
+            <button class="state-btn active" data-mining-state="active">3. Active (75%)</button>
+            <button class="state-btn" data-mining-state="completed">4. Completed (100%)</button>
+          </div>
+        </div>
+        <div class="session-badge-mini">
+          <span class="status-dot"></span>
+          <span>Live Reactor Telemetry</span>
+        </div>
+      </div>
+
+      <!-- THE LIVE MINING BANNER CARD COMPONENT -->
+      <div id="miningBannerCard" class="mining-banner-card" data-state="active">
+        <!-- Backdrop Grids & Ambient Lights -->
+        <div class="mining-banner-backdrop">
+          <div class="mining-circuit-grid"></div>
+          <div class="ambient-light-cyan"></div>
+          <div class="ambient-light-gold"></div>
+        </div>
+
+        <div class="mining-banner-content">
+          <!-- LEFT COLUMN: Content, Telemetry & CTA -->
+          <div class="mining-col-left">
+            <div class="mining-status-badge">
+              <span class="status-dot"></span>
+              <span id="miningStatusText">● MINING ACTIVE</span>
+            </div>
+
+            <h2 class="mining-heading">
+              Start Mining <span class="gradient-word">Start Earning</span>
+            </h2>
+
+            <p id="miningSubtext" class="mining-subtext">
+              Activate your session to earn VEs while staying engaged.
+            </p>
+
+            <!-- Dual Telemetry Tiles -->
+            <div class="mining-telemetry-grid">
+              <!-- Tile A: Mining Progress (Visual Progress Bar + Circular Progress Ring) -->
+              <div class="telemetry-tile">
+                <div class="telemetry-label-row">
+                  <span>Mining Progress</span>
+                  <span id="miningTimeText" style="color:var(--blue-cyan);">45:20 remaining</span>
+                </div>
+                <div class="telemetry-val-row" style="align-items: center; margin: 4px 0;">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <!-- Circular Progress Ring (Prompt: 'Create a visual progress bar/ring') -->
+                    <div class="progress-ring-container" style="position: relative; width: 44px; height: 44px; flex-shrink: 0;">
+                      <svg width="44" height="44" viewBox="0 0 44 44" style="transform: rotate(-90deg);">
+                        <circle cx="22" cy="22" r="18" stroke="rgba(255,255,255,0.08)" stroke-width="4" fill="none" />
+                        <circle id="miningProgressRingFill" cx="22" cy="22" r="18" stroke="url(#ringGrad)" stroke-width="4" fill="none" stroke-dasharray="113.1" stroke-dashoffset="28.27" stroke-linecap="round" style="transition: stroke-dashoffset 800ms cubic-bezier(0.16, 1, 0.3, 1);" />
+                        <defs>
+                          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#F2A900" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      <div id="ringMiniIcon" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff;">
+                        ⚡
+                      </div>
+                    </div>
+                    <div>
+                      <div id="miningProgressText" class="telemetry-val-primary">75%</div>
+                      <div class="telemetry-val-sub">Node Flux: 98.4 GH/s</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mining-progress-track">
+                  <div id="miningProgressFill" class="mining-progress-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+
+              <!-- Tile B: Reward Counter -->
+              <div class="telemetry-tile">
+                <div class="telemetry-label-row">
+                  <span>VE Reward Indicator</span>
+                  <span style="color:var(--text-gold);">VE Yield</span>
+                </div>
+                <div class="telemetry-val-row">
+                  <span id="miningRewardText" class="telemetry-val-primary gold">+38 VEs</span>
+                  <span class="telemetry-val-sub">Auto-credited</span>
+                </div>
+                <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:6px;">
+                  Next burst in 0:08s
+                </div>
+              </div>
+            </div>
+
+            <!-- Primary Action Row -->
+            <div class="mining-actions-row">
+              <button id="primaryMiningCta" class="btn-mining-cta active-mining" title="Click to interact with the mining session">
+                MINE NOW <span class="cta-arrow">⚡</span>
+              </button>
+              <div class="session-badge-mini">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Cycle: 60 Mins</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Futuristic Mining Station Visual -->
+          <div class="mining-col-right">
+            <div class="mining-visual-container">
+              <!-- Live Canvas for dynamic quantum reward particles -->
+              <canvas id="miningParticleCanvas" class="mining-canvas"></canvas>
+
+              <!-- Futuristic Mining Station Machine Visual SVG -->
+              <div class="reactor-svg-wrapper">
+                <svg viewBox="0 0 400 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="reactorCoreGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+                      <stop offset="50%" stop-color="#0284c7" stop-opacity="0.4"/>
+                      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="reactorGoldGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fffbeb"/>
+                      <stop offset="30%" stop-color="#fef08a"/>
+                      <stop offset="60%" stop-color="#F2A900"/>
+                      <stop offset="100%" stop-color="#b45309"/>
+                    </linearGradient>
+                    <linearGradient id="machineHousing" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#2a324d"/>
+                      <stop offset="50%" stop-color="#1d2338"/>
+                      <stop offset="100%" stop-color="#121624"/>
+                    </linearGradient>
+                    <linearGradient id="reactorSteel" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#334155"/>
+                      <stop offset="50%" stop-color="#1e293b"/>
+                      <stop offset="100%" stop-color="#0f172a"/>
+                    </linearGradient>
+                    <filter id="screenGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#F2A900" flood-opacity="0.4"/>
+                    </filter>
+                  </defs>
+
+                  <!-- Base Foundation Platform -->
+                  <ellipse cx="200" cy="278" rx="145" ry="25" fill="#090d16" stroke="#1e293b" stroke-width="2"/>
+                  <ellipse cx="200" cy="272" rx="125" ry="19" fill="url(#reactorSteel)" stroke="#38bdf8" stroke-width="1.5" opacity="0.85"/>
+                  <!-- Ground Reflection Arc -->
+                  <ellipse cx="200" cy="272" rx="75" ry="10" fill="#38bdf8" opacity="0.25" filter="blur(6px)"/>
+
+                  <!-- Left Energy Conduits / Mining Activity Cables -->
+                  <path d="M100 272 C70 250 55 205 65 165 C72 135 95 125 120 135" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.7"/>
+                  <!-- Right Collector Conduit toward Machine Body -->
+                  <path d="M295 272 C325 250 340 210 330 170 C325 145 300 130 280 135" stroke="#F2A900" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.7"/>
+
+                  <!-- Outer Magnetic Confinement Ring (Clockwise Rotation) -->
+                  <g class="ring-spin-cw">
+                    <circle cx="185" cy="145" r="82" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="32 14" opacity="0.6"/>
+                    <circle cx="185" cy="145" r="88" stroke="#60a5fa" stroke-width="1" stroke-dasharray="12 36" opacity="0.4"/>
+                    <!-- Ring Node Magnets -->
+                    <circle cx="185" cy="63" r="4" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+                    <circle cx="185" cy="227" r="4" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+                    <circle cx="103" cy="145" r="4" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+                    <circle cx="267" cy="145" r="4" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+                  </g>
+
+                  <!-- Inner Magnetic Confinement Ring (Counter-Clockwise Rotation) -->
+                  <g class="ring-spin-ccw">
+                    <circle cx="185" cy="145" r="62" stroke="#F2A900" stroke-width="2" stroke-dasharray="24 18" opacity="0.8"/>
+                    <polygon points="185,83 189,91 181,91" fill="#fde047"/>
+                    <polygon points="185,207 189,199 181,199" fill="#fde047"/>
+                  </g>
+
+                  <!-- Central Quantum Energy Core Glow -->
+                  <circle cx="185" cy="145" r="46" fill="url(#reactorCoreGlow)" class="core-pulse"/>
+
+                  <!-- MAIN LEVITATING VE COIN -->
+                  <g class="floating-ve-coin">
+                    <!-- Coin Outer Rim & 3D bevel -->
+                    <circle cx="185" cy="143" r="34" fill="url(#reactorGoldGleam)" stroke="#fffbeb" stroke-width="2.5"/>
+                    <circle cx="185" cy="143" r="28" fill="#1e1808" stroke="#d97706" stroke-width="1.5"/>
+                    <!-- Holographic VE Monogram inside main coin -->
+                    <path d="M172 131 L185 157 L198 131 H191 L185 143 L179 131 H172 Z" fill="#fef08a"/>
+                    <path d="M181 139 H193 M182 144 H190" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+                    <!-- Shimmer flare on coin -->
+                    <circle cx="173" cy="131" r="3" fill="#ffffff"/>
+                  </g>
+
+                  <!-- SMALLER ORBITING VE COINS (Required: smaller VE coins) -->
+                  <!-- Smaller Coin 1: Top-Left Orbit -->
+                  <g transform="translate(132, 92)" class="floating-ve-coin" style="animation-delay: -1s;">
+                    <circle cx="0" cy="0" r="10" fill="url(#reactorGoldGleam)" stroke="#ffffff" stroke-width="1"/>
+                    <circle cx="0" cy="0" r="8" fill="#2a1f0a"/>
+                    <text x="-5" y="3" fill="#fef08a" font-family="sans-serif" font-size="6" font-weight="bold">VE</text>
+                  </g>
+                  <!-- Smaller Coin 2: Mid-Trajectory toward Screen / Vault -->
+                  <g transform="translate(236, 172)" class="floating-ve-coin" style="animation-delay: -2s;">
+                    <circle cx="0" cy="0" r="8" fill="url(#reactorGoldGleam)" stroke="#ffffff" stroke-width="1"/>
+                    <circle cx="0" cy="0" r="6.5" fill="#2a1f0a"/>
+                    <text x="-4" y="2.5" fill="#fef08a" font-family="sans-serif" font-size="5" font-weight="bold">VE</text>
+                  </g>
+                  <!-- Smaller Coin 3: Entering Receptacle Conduit -->
+                  <g transform="translate(262, 196)" class="floating-ve-coin" style="animation-delay: -0.5s;">
+                    <circle cx="0" cy="0" r="7" fill="url(#reactorGoldGleam)" stroke="#ffffff" stroke-width="0.75"/>
+                    <circle cx="0" cy="0" r="5.5" fill="#2a1f0a"/>
+                    <text x="-3.5" y="2" fill="#fef08a" font-family="sans-serif" font-size="4" font-weight="bold">VE</text>
+                  </g>
+
+                  <!-- Stream of Quantum VE Emission Energy toward Machine Body -->
+                  <path d="M215 152 Q245 170 272 198" stroke="#F2A900" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+                  <circle cx="230" cy="164" r="2.5" fill="#ffffff"/>
+                  <circle cx="250" cy="180" r="2" fill="#fde047"/>
+
+                  <!-- FUTURISTIC MINING MACHINE BODY & SCREEN (Right Section) -->
+                  <g id="miningMachineUnit" transform="translate(272, 170)" filter="url(#screenGlow)">
+                    <!-- Machine Armor Body -->
+                    <path d="M0 12 L12 0 H106 L118 12 V82 L106 94 H12 L0 82 Z" fill="url(#machineHousing)" stroke="#F2A900" stroke-width="2"/>
+                    <!-- Machine Top Cooling Grill -->
+                    <line x1="24" y1="6" x2="94" y2="6" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                    
+                    <!-- High-Tech Machine Screen (HUD) -->
+                    <rect x="10" y="14" width="98" height="66" rx="6" fill="#0c101c" stroke="#38bdf8" stroke-width="1.5"/>
+                    
+                    <!-- Machine Display: +38 VE (Required) -->
+                    <text x="18" y="34" fill="#9AA4B8" font-family="monospace" font-size="8" font-weight="bold" letter-spacing="0.5">REWARD YIELD</text>
+                    <text id="machineScreenReward" x="18" y="52" fill="#F2A900" font-family="monospace" font-size="16" font-weight="bold">+38 VE</text>
+
+                    <!-- Machine Status: ● MINING ACTIVE (Required) -->
+                    <g id="machineStatusIndicator" transform="translate(18, 62)">
+                      <circle cx="4" cy="4" r="3.5" fill="#10b981" class="core-pulse"/>
+                      <circle cx="4" cy="4" r="1.5" fill="#ffffff"/>
+                      <text x="12" y="7" fill="#F5F5F5" font-family="sans-serif" font-size="7.5" font-weight="bold" letter-spacing="0.4">MINING ACTIVE</text>
+                    </g>
+
+                    <!-- Machine Vent Accents -->
+                    <line x1="20" y1="88" x2="35" y2="88" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="42" y1="88" x2="57" y2="88" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="64" y1="88" x2="79" y2="88" stroke="#F2A900" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="86" y1="88" x2="100" y2="88" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State Architecture Analysis -->
+      <div class="grid-4" style="margin-top: var(--space-8);">
+        <div class="card-glass">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:14px;">State 1 — Default</strong>
+            <span class="badge-tag">Inactive</span>
+          </div>
+          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Standby reactor coils, 0% progress fill, "+0 VEs", and clean gold primary CTA inviting activation.
+          </p>
+        </div>
+        <div class="card-glass">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:14px;">State 2 — Hover</strong>
+            <span class="badge-tag gold">Pre-Ignition</span>
+          </div>
+          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Magnetic coils accelerate, ambient amber glow expands, and button elevates with subtle specular rim sheen.
+          </p>
+        </div>
+        <div class="card-glass">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:14px;">State 3 — Active</strong>
+            <span class="badge-tag blue">75% Extraction</span>
+          </div>
+          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Progress bar at 75%, live remaining timer (45:20), ticking VE yield (+38 VEs), and circulating particle canvas.
+          </p>
+        </div>
+        <div class="card-glass">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:14px;">State 4 — Completed</strong>
+            <span class="badge-tag emerald">100% Quota</span>
+          </div>
+          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Progress reaches 100%, total yield shows +50 VEs, and button shifts to emerald "Claim 50 VEs & Continue".
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         04 — MINING BANNER RESPONSIVE VIEWPORT SIMULATOR
+         ==================================================================== -->
+    <section id="section-responsive" class="case-section">
+      <div class="section-header">
+        <div class="section-label">04 — Responsive Architecture</div>
+        <h2 class="section-title">Responsive Viewport Testing Rig</h2>
+        <p class="section-desc">
+          Verify component ergonomics across Desktop (1920px, 1440px, 1280px), Tablet (768px+), and Mobile (320px–375px). Use the controls below to resize the live container in real-time.
+        </p>
+      </div>
+
+      <!-- Viewport Controls Toolbar -->
+      <div class="viewport-simulator-toolbar">
+        <div class="viewport-btn-group">
+          <button class="viewport-btn active" data-viewport-width="100%" data-viewport-label="Desktop Full">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span>Desktop (1920px / 100%)</span>
+          </button>
+          <button class="viewport-btn" data-viewport-width="1280px" data-viewport-label="Desktop Standard">
+            <span>Desktop (1280px)</span>
+          </button>
+          <button class="viewport-btn" data-viewport-width="768px" data-viewport-label="Tablet Landscape">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <span>Tablet (768px)</span>
+          </button>
+          <button class="viewport-btn" data-viewport-width="375px" data-viewport-label="Mobile Standard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <span>Mobile (375px)</span>
+          </button>
+          <button class="viewport-btn" data-viewport-width="320px" data-viewport-label="Mobile Minimum">
+            <span>Mobile (320px)</span>
+          </button>
+        </div>
+
+        <div class="viewport-metrics-pill" id="viewportMetricsDisplay">
+          Desktop Full (100%)
+        </div>
+      </div>
+
+      <!-- Resizable Stage Outer Container -->
+      <div class="viewport-stage-outer">
+        <div id="responsiveStageContainer" class="viewport-stage-container" style="max-width: 100%;">
+          <!-- Responsive Clone of Banner -->
+          <div class="mining-banner-card" data-state="active">
+            <div class="mining-banner-backdrop">
+              <div class="mining-circuit-grid"></div>
+              <div class="ambient-light-cyan"></div>
+              <div class="ambient-light-gold"></div>
+            </div>
+
+            <div class="mining-banner-content">
+              <div class="mining-col-left">
+                <div class="mining-status-badge">
+                  <span class="status-dot"></span>
+                  <span>● MINING ACTIVE</span>
+                </div>
+                <h2 class="mining-heading">Start Mining <span class="gradient-word">Start Earning</span></h2>
+                <p class="mining-subtext">Activate your session to earn VEs while staying engaged.</p>
+
+                <div class="mining-telemetry-grid">
+                  <div class="telemetry-tile">
+                    <div class="telemetry-label-row">
+                      <span>Mining Progress</span>
+                      <span style="color:var(--blue-cyan);">45:20 remaining</span>
+                    </div>
+                    <div class="telemetry-val-row" style="align-items: center; margin: 4px 0;">
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="position: relative; width: 38px; height: 38px; flex-shrink: 0;">
+                          <svg width="38" height="38" viewBox="0 0 44 44" style="transform: rotate(-90deg);">
+                            <circle cx="22" cy="22" r="18" stroke="rgba(255,255,255,0.08)" stroke-width="4" fill="none" />
+                            <circle cx="22" cy="22" r="18" stroke="url(#ringGradResp)" stroke-width="4" fill="none" stroke-dasharray="113.1" stroke-dashoffset="28.27" stroke-linecap="round" />
+                            <defs>
+                              <linearGradient id="ringGradResp" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="100%" stop-color="#F2A900" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff;">
+                            ⚡
+                          </div>
+                        </div>
+                        <span class="telemetry-val-primary">75%</span>
+                      </div>
+                    </div>
+                    <div class="mining-progress-track">
+                      <div class="mining-progress-fill" style="width: 75%;"></div>
+                    </div>
+                  </div>
+                  <div class="telemetry-tile">
+                    <div class="telemetry-label-row">
+                      <span>VE Reward Indicator</span>
+                    </div>
+                    <div class="telemetry-val-row">
+                      <span class="telemetry-val-primary gold">+38 VEs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mining-actions-row">
+                  <button class="btn-mining-cta active-mining">
+                    MINE NOW <span class="cta-arrow">⚡</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mining-col-right">
+                <div class="mining-visual-container">
+                  <div class="reactor-svg-wrapper">
+                    <svg viewBox="0 0 400 340" fill="none">
+                      <circle cx="200" cy="150" r="75" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="24 16" class="ring-spin-cw"/>
+                      <circle cx="200" cy="150" r="55" stroke="#f59e0b" stroke-width="2" stroke-dasharray="16 12" class="ring-spin-ccw"/>
+                      <circle cx="200" cy="150" r="38" fill="#38bdf8" opacity="0.3" class="core-pulse"/>
+                      <circle cx="200" cy="148" r="28" fill="#f59e0b" stroke="#fff" stroke-width="1.5" class="floating-ve-coin"/>
+                      <text x="190" y="153" fill="#fff" font-family="monospace" font-size="14" font-weight="bold">VE</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsive Metrics Comparison Breakdown -->
+      <div class="grid-3" style="margin-top: var(--space-8);">
+        <div class="card-glass">
+          <div class="badge-tag blue" style="margin-bottom:8px;">DESKTOP SPECIFICATIONS</div>
+          <h4 style="font-family:var(--font-display); font-size:16px; margin-bottom:6px;">1280px / 1440px / 1920px</h4>
+          <ul style="font-size:12px; color:var(--text-secondary); line-height:1.6; padding-left:16px;">
+            <li>Container height: <strong>410–450px</strong></li>
+            <li>Layout: 2-column horizontal split (1.15fr text / 0.85fr visual)</li>
+            <li>Interactive quantum particle canvas enabled</li>
+            <li>Full telemetry HUD tiles displayed side-by-side</li>
+          </ul>
+        </div>
+
+        <div class="card-glass">
+          <div class="badge-tag gold" style="margin-bottom:8px;">TABLET SPECIFICATIONS</div>
+          <h4 style="font-family:var(--font-display); font-size:16px; margin-bottom:6px;">768px to 1024px</h4>
+          <ul style="font-size:12px; color:var(--text-secondary); line-height:1.6; padding-left:16px;">
+            <li>Container height: <strong>380–540px</strong></li>
+            <li>Layout: Rebalanced vertical stacking with preserved visual</li>
+            <li>Reactor scale adjusted cleanly to fit viewport</li>
+            <li>Full touch targets for primary CTA button</li>
+          </ul>
+        </div>
+
+        <div class="card-glass">
+          <div class="badge-tag emerald" style="margin-bottom:8px;">MOBILE SPECIFICATIONS</div>
+          <h4 style="font-family:var(--font-display); font-size:16px; margin-bottom:6px;">320px to 480px</h4>
+          <ul style="font-size:12px; color:var(--text-secondary); line-height:1.6; padding-left:16px;">
+            <li>Container height: <strong>330–520px</strong></li>
+            <li>Full-width stacked CTA button for thumb reachability</li>
+            <li>Compact telemetry tiles stacked vertically</li>
+            <li>Zero horizontal overflow; clean text wrapping</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         05 — BADGE DESIGN SYSTEM
+         ==================================================================== -->
+    <section id="section-design-system" class="case-section">
+      <div class="section-header">
+        <div class="section-label">05 — Design Language & Tokens</div>
+        <h2 class="section-title">10-Level Badge Design System</h2>
+        <p class="section-desc">
+          Engineered as <strong>premium semi-3D metallic and gemstone achievement emblems</strong>. Every badge shares strict heraldic geometric rules, transparent backgrounds, and the unifying central VE insignia.
+        </p>
+      </div>
+
+      <!-- Badge System Principles Grid -->
+      <div class="grid-3" style="margin-bottom: var(--space-8);">
+        <div class="card-glass">
+          <span class="badge-tag gold" style="margin-bottom:8px;">RULE I</span>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:6px;">100% Transparent Backgrounds</h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); line-height:1.5;">
+            All 10 badges are crafted without rectangular container shapes. They render seamlessly over the dark <code style="color:var(--text-gold);">#161827</code> app background, modals, cards, and light surfaces.
+          </p>
+        </div>
+
+        <div class="card-glass">
+          <span class="badge-tag blue" style="margin-bottom:8px;">RULE II</span>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:6px;">Escalating Geometric Complexity</h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); line-height:1.5;">
+            Bronze begins with simple bevels. Silver introduces 8-sided facets. Gold adds laurel filigree. Platinum brings aerospace stepped plates. Diamond to Ruby feature faceted gemstone tables. Master and Legend culminate in imperial crowns and multi-gem settings.
+          </p>
+        </div>
+
+        <div class="card-glass">
+          <span class="badge-tag emerald" style="margin-bottom:8px;">RULE III</span>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:6px;">Fintech-Compliant Material Palette</h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); line-height:1.5;">
+            Strict adherence to non-gaming tones: no neon greens (rich emerald), no neon pinks (deep pigeon-blood ruby), and no electric cyans (midnight sapphire).
+          </p>
+        </div>
+      </div>
+
+      <!-- 10-Level Tier Hierarchy Matrix -->
+      <div class="card-glass">
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          10-Level Material & Prestige Progression Matrix
+        </h3>
+        <table class="tokens-spec-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Name</th>
+              <th>Material Shader</th>
+              <th>Key Geometric Features</th>
+              <th>VE Core Insignia Styling</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge-tag" style="background:#3b1d0a; color:#e8a87c; border:1px solid #bf7d4e;">01 BRONZE</span></td>
+              <td><strong>First Step</strong></td>
+              <td>Brushed Bronze Metal</td>
+              <td>Simple heraldic shield, outer bevel, 3 beginner rivets</td>
+              <td>Embossed bronze VE monogram with subtle inner bar</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag" style="background:#1e293b; color:#e2e8f0; border:1px solid #94a3b8;">02 SILVER</span></td>
+              <td><strong>Rising Star</strong></td>
+              <td>Silver / Rhodium Metal</td>
+              <td>Octagonal faceted border, dual plate layers, 4-point star finial</td>
+              <td>Polished steel VE monogram with horizontal tech insets</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag gold">03 GOLD</span></td>
+              <td><strong>Reward Hunter</strong></td>
+              <td>24K Polished Gold</td>
+              <td>Arched royal shield, outer laurel leaf wreaths, triple bevels</td>
+              <td>Radiant gold VE monogram with white specular highlight</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag blue">04 PLATINUM</span></td>
+              <td><strong>Elite Earner</strong></td>
+              <td>Aerospace Platinum</td>
+              <td>Aerodynamic angular hexagon, stepped plates, cyber grooves</td>
+              <td>Razor-chiseled platinum VE with micro cyan reflection</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag" style="background:#0c2038; color:#7dd3fc; border:1px solid #38bdf8;">05 DIAMOND</span></td>
+              <td><strong>High Achiever</strong></td>
+              <td>Brilliant Crystal Diamond</td>
+              <td>Multi-faceted brilliant diamond cut, pavilion facets, prism flares</td>
+              <td>Prismatic diamond VE monogram inside jewel table</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag emerald">06 EMERALD</span></td>
+              <td><strong>Reward Master</strong></td>
+              <td>Imperial Emerald Gemstone</td>
+              <td>High-jewelry step-cut octagonal emerald, platinum filigree claws</td>
+              <td>Chiseled gold VE emblem set within deep green table</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag" style="background:#172554; color:#93c5fd; border:1px solid #2563eb;">07 SAPPHIRE</span></td>
+              <td><strong>Top Performer</strong></td>
+              <td>Royal Sapphire Gemstone</td>
+              <td>Cushion-cut sapphire, aerodynamic celestial titanium wings</td>
+              <td>Deep blue sapphire VE monogram with starburst finial</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag" style="background:#4c0519; color:#fb7185; border:1px solid #e11d48;">08 RUBY</span></td>
+              <td><strong>Elite</strong></td>
+              <td>Sovereign Ruby Gemstone</td>
+              <td>Shield-cut pigeon-blood ruby, ruthenium armor, sovereign gold</td>
+              <td>Crimson radiant VE monogram with lower ruby teardrop</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag gold">09 MASTER</span></td>
+              <td><strong>Master Achiever</strong></td>
+              <td>Imperial Master Sovereign</td>
+              <td>Imperial master crown, dual ruby/sapphire flanking gems, starbursts</td>
+              <td>Multi-bevel master gold VE with dual heraldic stars</td>
+            </tr>
+            <tr>
+              <td><span class="badge-tag gold" style="border-color:#fde047; box-shadow:0 0 10px rgba(245,158,11,0.4);">10 LEGEND</span></td>
+              <td><strong>VELOOP Legend</strong></td>
+              <td>Mythic Sovereign Apex</td>
+              <td>Imperial apex crown, all 4 cardinal gems (D, E, S, R), celestial halo</td>
+              <td>Singularity cosmic VE monogram with pulsing orbit rings</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Badge Anatomy & Component Architecture Specifications -->
+      <div class="card-glass" style="margin-top: var(--space-6);">
+        <span class="badge-tag blue" style="margin-bottom: var(--space-3);">ANATOMY & SPECIFICATIONS</span>
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          Unified Badge Anatomy & Component Rules
+        </h3>
+        <div class="grid-4" style="gap: var(--space-4); margin-bottom: var(--space-6);">
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="font-weight:700; font-size:13px; color:var(--text-gold); margin-bottom:4px;">1. Geometry & Dimensions</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
+              <strong>1:1 Aspect Ratio:</strong> Standardized on <code>viewBox="0 0 200 200"</code> vector space. Scalable across 36px (mini), 54px (compact), 140px (card), and 180px (modal) without fidelity loss.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="font-weight:700; font-size:13px; color:var(--text-gold); margin-bottom:4px;">2. Multi-Layered Borders</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
+              <strong>Directional Lighting:</strong> 45° metallic chamfers using 3 to 6 stop linear gradients. Outer rim (2px) protects inner recessed gem fields and brushed metal plates.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="font-weight:700; font-size:13px; color:var(--text-gold); margin-bottom:4px;">3. Central VE Monogram</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
+              <strong>Consistent Core Anchor:</strong> The proprietary VE monogram occupies the exact focal center across all 10 badges, escalating from simple copper to 3D celestial gold.
+            </p>
+          </div>
+
+          <div class="telemetry-tile" style="padding: var(--space-4);">
+            <div style="font-weight:700; font-size:13px; color:var(--text-gold); margin-bottom:4px;">4. Specular Sheen & Depth</div>
+            <p style="font-size:11px; color:var(--text-secondary); line-height:1.5;">
+              <strong>Semi-3D Realism:</strong> Diagonal specular arcs (35% white opacity) and integrated SVG drop-shadow filters (<code>feDropShadow</code>) provide physical mass without bitmap blur.
+            </p>
+          </div>
+        </div>
+
+        <!-- Token Standards Grid -->
+        <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-3); color:#fff;">
+          Design System Token Constraints
+        </h4>
+        <div class="grid-3" style="font-size: 12px;">
+          <div style="background: rgba(17,19,32,0.6); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <strong style="color:var(--text-gold);">Colors & Contrast</strong>
+            <div style="color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+              Background #161827 | Primary Text #F8FAFC (15.2:1 contrast ratio) | Secondary #94A3B8 (7.1:1 ratio) | Gold Accents #F59E0B.
+            </div>
+          </div>
+          <div style="background: rgba(17,19,32,0.6); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <strong style="color:var(--blue-cyan);">Typography Hierarchy</strong>
+            <div style="color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+              Display: Space Grotesk (H1: 36–48px, H2: 30px, H3: 20px) | Body: Plus Jakarta Sans (14–16px) | Mono: JetBrains Mono (10–12px).
+            </div>
+          </div>
+          <div style="background: rgba(17,19,32,0.6); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <strong style="color:var(--gem-emerald-light);">Elevations & Radius</strong>
+            <div style="color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+              Radius: sm(8px), md(12px), xl(24px), 2xl(32px), full(9999px) | Elevation: Card (30px shadow + 1px glass border) | Timing: 400ms smooth cubic-bezier.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         06 — BADGE COLLECTION SCREEN
+         ==================================================================== -->
+    <section id="section-achievements" class="case-section">
+      <div class="section-header">
+        <div class="section-label">06 — Dedicated Screen</div>
+        <h2 class="section-title">Your Achievements</h2>
+        <p class="section-desc">
+          Keep progressing to unlock greater rewards. Hover over any badge for requirements and perks, or click to open the full achievement showcase.
+        </p>
+      </div>
+
+      <!-- Progression Status Banner -->
+      <div class="progression-banner-card">
+        <div class="progression-header">
+          <div class="progression-tier-title">
+            <span>Current Status:</span>
+            <span class="current-tier">Level 3 — Reward Hunter (Gold)</span>
+          </div>
+          <div class="progression-milestone-text">
+            <span>Progress: <strong>Level 3 of 10</strong></span>
+            <span>•</span>
+            <span><strong>2 more achievements</strong> to reach Platinum</span>
+          </div>
+        </div>
+
+        <div class="mining-progress-track" style="height: 10px;">
+          <div class="mining-progress-fill" style="width: 30%; background: linear-gradient(90deg, #b45309 0%, #f59e0b 50%, #38bdf8 100%);"></div>
+        </div>
+      </div>
+
+      <!-- Badge Collection Controls: Filters & Surface Switcher -->
+      <div class="state-switcher-bar" style="margin-bottom: var(--space-6);">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); text-transform:uppercase;">
+            Filter Badges:
+          </span>
+          <div class="state-switcher-group">
+            <button class="state-btn active" data-badge-filter="all">All (10)</button>
+            <button class="state-btn" data-badge-filter="unlocked">Unlocked (3)</button>
+            <button class="state-btn" data-badge-filter="locked">Locked (7)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); text-transform:uppercase;">
+            Test Surface Background:
+          </span>
+          <div class="state-switcher-group">
+            <button class="state-btn active" data-surface-bg="dark">Dark #161827</button>
+            <button class="state-btn" data-surface-bg="light">Light Silver #F8FAFC</button>
+            <button class="state-btn" data-surface-bg="obsidian">Obsidian #0B0E17</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic 10-Badge Showcase Grid -->
+      <div id="badgeCollectionGrid" class="badges-showcase-grid" style="transition: background-color 300ms ease, padding 300ms ease; border-radius: var(--radius-2xl);">
+        <!-- Rendered dynamically via js/bundle.js -->
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         07 — BADGE STATES
+         ==================================================================== -->
+    <section id="section-badge-states" class="case-section">
+      <div class="section-header">
+        <div class="section-label">07 — Component States</div>
+        <h2 class="section-title">Locked vs Unlocked Badge States</h2>
+        <p class="section-desc">
+          Locked badges remain recognizable with reduced saturation and a discrete lock glyph to stimulate goal-oriented curiosity, while unlocked badges radiate full metallic luster.
+        </p>
+      </div>
+
+      <!-- State Comparison Container -->
+      <div id="badgeStatesGrid" class="grid-3" style="margin-bottom: var(--space-8);">
+        <!-- Rendered dynamically via js/app.js -->
+      </div>
+
+      <!-- Desktop Hover Tooltip & Unlock Milestone Specifications (Item 14 & 15) -->
+      <div class="grid-2" style="margin-top: var(--space-8);">
+        <!-- Desktop Hover Tooltip Anatomy -->
+        <div class="card-glass">
+          <div class="badge-tag gold" style="margin-bottom: var(--space-3);">COMPONENT ANATOMY</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-3);">
+            Desktop Hover / Tooltip Specification
+          </h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-4); line-height:1.5;">
+            Hovering over any achievement badge surfaces an instantaneous telemetry tooltip displaying all 5 critical data points without page reloads.
+          </p>
+
+          <!-- Static Tooltip Component Breakdown Card -->
+          <div style="background: rgba(17, 20, 36, 0.96); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); box-shadow: 0 16px 36px rgba(0,0,0,0.6); max-width: 360px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px; margin-bottom: 8px;">
+              <div>
+                <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase;">1. Badge Name:</span>
+                <div style="font-family:var(--font-display); font-size:14px; font-weight:700; color:#fff;">Reward Hunter</div>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase;">2. Level & Tier:</span>
+                <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold); font-weight:700;">Level 03 • Gold</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 8px;">
+              <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase;">3. Status:</span>
+              <div style="font-size:12px; font-family:var(--font-mono); color:#34d399; font-weight:600;">Unlocked ✓ (Active Standing)</div>
+            </div>
+
+            <div style="margin-bottom: 8px;">
+              <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase;">4. Requirement:</span>
+              <div style="font-size:11px; color:var(--blue-cyan); line-height:1.4;">
+                Earn 500 VEs & maintain an active 7-day mining streak
+              </div>
+            </div>
+
+            <div>
+              <span style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase;">5. Short Description:</span>
+              <div style="font-size:11px; color:var(--text-secondary); line-height:1.4;">
+                A distinguished mark of persistence. Featuring laurel motifs and triple-bevel 24K gold heraldry.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievement Unlocked Milestone Card Preview -->
+        <div class="card-glass">
+          <div class="badge-tag emerald" style="margin-bottom: var(--space-3);">MILESTONE CARD SPEC</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-3);">
+            Achievement Unlocked Milestone Experience
+          </h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-4); line-height:1.5;">
+            Upon crossing a reward threshold, the user is greeted by the celebratory milestone card with sound feedback, animated particles, and instant perk activation.
+          </p>
+
+          <!-- Inline Milestone Card Spec -->
+          <div style="background: linear-gradient(135deg, rgba(28, 32, 54, 0.95) 0%, rgba(18, 20, 36, 0.98) 100%); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: var(--radius-xl); padding: var(--space-5); text-align: center; box-shadow: 0 12px 30px rgba(0,0,0,0.6);">
+            <span class="badge-tag gold" style="margin-bottom: 8px;">Achievement Unlocked!</span>
+            <h4 style="font-family:var(--font-display); font-size:18px; font-weight:700; color:#fff; margin-bottom:4px;">
+              Congratulations! You've reached a new milestone.
+            </h4>
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">
+              Level 03 — Reward Hunter (Gold Tier) is now unlocked and equipped.
+            </p>
+            <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
+              <span class="modal-reward-item" style="font-size:10px;">✓ +5% Hash Booster</span>
+              <span class="modal-reward-item" style="font-size:10px;">✓ Priority Node</span>
+            </div>
+            <button class="btn-primary" data-goto-tab="achievements" style="font-size:12px; padding:8px 20px; width:100%; justify-content:center;">
+              Explore Badge in Collection →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         08 — BADGE PROGRESSION
+         ==================================================================== -->
+    <section id="section-progression" class="case-section">
+      <div class="section-header">
+        <div class="section-label">08 — Progression Journey</div>
+        <h2 class="section-title">10-Node Achievement Progression Path</h2>
+        <p class="section-desc">
+          A continuous visual roadmap linking Level 01 Bronze to Level 10 Legend, indicating completed milestones, active standing, and locked future frontiers.
+        </p>
+      </div>
+
+      <!-- Progression Tier Chain Ribbon -->
+      <div class="card-glass" style="margin-bottom: var(--space-6); padding: var(--space-4) var(--space-6);">
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold); text-transform:uppercase; margin-bottom:8px;">
+          Progression Hierarchy Chain: Level 01 to Level 10
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; font-size:12px; font-weight:600;">
+          <span style="color:#bf7d4e;">01 Bronze</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#cbd5e1;">02 Silver</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#f59e0b; background:rgba(245,158,11,0.15); padding:2px 8px; border-radius:var(--radius-full); border:1px solid rgba(245,158,11,0.3);">03 Gold (Current)</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#38bdf8;">04 Platinum</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#bae6fd;">05 Diamond</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#10b981;">06 Emerald</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#2563eb;">07 Sapphire</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#e11d48;">08 Ruby</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#f59e0b;">09 Master</span> <span style="color:var(--text-muted);">→</span>
+          <span style="color:#fbbf24; font-weight:700;">10 Legend</span>
+        </div>
+      </div>
+
+      <!-- Main Progression Card with Segmented Progress Bar -->
+      <div class="card-glass" style="padding: var(--space-8);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--space-4); margin-bottom:var(--space-6);">
+          <div>
+            <span class="badge-tag gold">ACTIVE JOURNEY</span>
+            <h3 id="progressionLevelHeading" style="font-family:var(--font-display); font-size:var(--text-2xl); margin-top:6px;">
+              Level 0 of 10
+            </h3>
+            <div style="font-size:var(--text-sm); color:var(--text-secondary); margin-top:2px;">
+              Current Standing: <span id="progressionStandingText"><strong style="color:var(--text-secondary);">Recruit Miner (Beginner Tier)</strong></span>
+            </div>
+          </div>
+          <div style="background:rgba(15,23,42,0.7); padding:var(--space-3) var(--space-5); border-radius:var(--radius-lg); border:1px solid var(--border-medium); text-align:right;">
+            <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); text-transform:uppercase;">Next Achievement</div>
+            <div id="progressionNextTitle" style="font-family:var(--font-display); font-size:var(--text-base); font-weight:700; color:var(--blue-cyan);">
+              Level 01 — Bronze: First Step
+            </div>
+          </div>
+        </div>
+
+        <!-- Segmented Goal-Gradient Progress Bar -->
+        <div style="margin-bottom:var(--space-6);">
+          <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); margin-bottom:6px;">
+            <span id="progressionPercentLabel">Current Progress: <strong>0% (0 of 10 Tiers)</strong></span>
+            <span id="progressionMilestonesRemaining">10 achievements to reach Legend</span>
+          </div>
+          <div class="mining-progress-track" style="height: 12px;">
+            <div id="progressionProgressBarFill" class="mining-progress-fill" style="width: 0%; background: linear-gradient(90deg, #b45309 0%, #f59e0b 50%, #38bdf8 100%);"></div>
+          </div>
+        </div>
+
+        <!-- The Interactive 10-Node Progression Track -->
+        <div class="progression-path-track">
+          <div class="progression-track-line">
+            <div class="progression-track-fill"></div>
+          </div>
+          <div id="progressionTrackNodes" style="display:contents;">
+            <!-- Rendered dynamically via js/bundle.js -->
+          </div>
+        </div>
+
+        <!-- Next Milestone Motivation Callout -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--space-4); margin-top:var(--space-8); padding:var(--space-4) var(--space-5); background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:var(--radius-lg);">
+          <div style="display:flex; align-items:center; gap:var(--space-3);">
+            <div style="width:42px; height:42px; flex-shrink:0;">
+              <img id="progressionNextCalloutImg" src="assets/badges/01-bronze-first-step.svg" alt="Next Target" style="width:100%; height:100%; object-fit:contain;" />
+            </div>
+            <div>
+              <strong id="progressionNextCalloutTitle" style="color:#fff; font-size:13px;">Next Frontier: Level 01 Bronze (First Step)</strong>
+              <div id="progressionNextCalloutDesc" style="font-size:11px; color:var(--text-secondary);">
+                Activate &amp; complete your first mining session (Earn 10 VEs).
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" data-goto-tab="mining-banner" style="font-size:12px; padding:8px 18px;">
+            Start Mining to Advance →
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         09 — PROTOTYPE / INTERACTIONS & REAL-WORLD PREVIEWS
+         ==================================================================== -->
+    <section id="section-prototype" class="case-section">
+      <div class="section-header">
+        <div class="section-label">09 — Live Interactive Experience</div>
+        <h2 class="section-title">Prototype & Application Mockups</h2>
+        <p class="section-desc">
+          Experience the full interactive flow inside the VELOOP Rewards ecosystem: test the celebratory Achievement Unlocked Modal, trigger live toast notifications, and explore the complete dashboard and profile previews.
+        </p>
+      </div>
+
+      <!-- Quick Trigger Bar for Interactions & Complete 7-Stage Flow -->
+      <div class="card-glass" style="margin-bottom: var(--space-8); padding: var(--space-4) var(--space-6); border-color: rgba(242, 169, 0, 0.35);">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--space-4);">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <strong style="font-size:14px; color:#fff;">Interactive Mining Loop:</strong>
+              <span class="badge-tag gold">Full 7-Stage Flow</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-secondary); margin-top:3px; font-family:var(--font-mono);">
+              START ➔ MINE NOW ➔ MINING ACTIVE ➔ PROGRESS ➔ REWARD ➔ UNLOCKED ➔ PROGRESSION ➔ RETURN
+            </div>
+          </div>
+          <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+            <button class="btn-primary gold" id="runFullFlowBtn" style="font-weight:700;">
+              ▶ Run Complete Mining-to-Unlock Flow
+            </button>
+            <button class="btn-primary" id="testModalBtn">Unlock Modal (Legend)</button>
+            <button class="btn-secondary" id="testToastBtn">Toast Notification</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FULL DASHBOARD MOCKUP PREVIEW (#161827 THEME) -->
+      <div style="margin-bottom: var(--space-12);">
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4); display:flex; align-items:center; gap:8px;">
+          <span>Application Preview: VELOOP Rewards Dashboard</span>
+          <span class="badge-tag gold">Dark Theme #161827</span>
+        </h3>
+
+        <div class="dashboard-mockup-frame">
+          <!-- Window Header Bar -->
+          <div class="mockup-window-header">
+            <div class="mockup-window-dots">
+              <span class="mockup-dot red"></span>
+              <span class="mockup-dot yellow"></span>
+              <span class="mockup-dot green"></span>
+            </div>
+            <div class="mockup-window-url">https://rewards.veloop.io/dashboard</div>
+          </div>
+
+          <!-- Dashboard Layout Body -->
+          <div class="dashboard-layout-body">
+            <!-- Sidebar -->
+            <aside class="mockup-sidebar">
+              <div style="font-family:var(--font-display); font-weight:700; font-size:16px; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:var(--text-gold);">◆</span> VELOOP
+              </div>
+              <div class="sidebar-nav-item active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                <span>Dashboard</span>
+              </div>
+              <div class="sidebar-nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
+                <span>Mine & Earn</span>
+              </div>
+              <div class="sidebar-nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                <span>Achievements</span>
+              </div>
+              <div class="sidebar-nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 15h0M2 9.5h20"></path></svg>
+                <span>VE Wallet</span>
+              </div>
+
+              <!-- User Profile Widget in Sidebar -->
+              <div class="sidebar-user-widget">
+                <div class="sidebar-avatar" id="sidebarAvatar">AM</div>
+                <div style="overflow:hidden;">
+                  <div style="font-size:12px; font-weight:700; color:#fff; white-space:nowrap; text-overflow:ellipsis;" id="sidebarUserName">Active Miner</div>
+                  <div style="font-size:10px; color:var(--text-gold); font-family:var(--font-mono);" id="sidebarUserTier">Recruit Miner</div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="mockup-main-content">
+              <!-- Top Metrics Row -->
+              <div class="mockup-top-stats">
+                <div class="mockup-stat-card">
+                  <div>
+                    <div class="mockup-stat-label">Total VE Balance</div>
+                    <div class="mockup-stat-value gold" id="mockupTotalBalance">0 VEs</div>
+                  </div>
+                  <span class="badge-tag gold">+12.4%</span>
+                </div>
+                <div class="mockup-stat-card">
+                  <div>
+                    <div class="mockup-stat-label">Active Hash Rate</div>
+                    <div class="mockup-stat-value">98.4 GH/s</div>
+                  </div>
+                  <span class="badge-tag blue">Optimal</span>
+                </div>
+                <div class="mockup-stat-card">
+                  <div>
+                    <div class="mockup-stat-label">Badges Unlocked</div>
+                    <div class="mockup-stat-value" id="mockupBadgesUnlocked">0 / 10</div>
+                  </div>
+                  <span class="badge-tag emerald">Top Tier</span>
+                </div>
+              </div>
+
+              <!-- Embedded Mining Banner Preview Inside App -->
+              <div>
+                <div style="font-family:var(--font-display); font-weight:700; font-size:14px; margin-bottom:8px; color:var(--text-secondary);">
+                  ACTIVE EXTRACTION NODE
+                </div>
+                <div class="mining-banner-card" data-state="active" style="min-height: 320px;">
+                  <div class="mining-banner-backdrop">
+                    <div class="mining-circuit-grid"></div>
+                  </div>
+                  <div class="mining-banner-content" style="padding: var(--space-5) var(--space-6);">
+                    <div class="mining-col-left">
+                      <div class="mining-status-badge">
+                        <span class="status-dot"></span>
+                        <span>● MINING ACTIVE</span>
+                      </div>
+                      <h3 style="font-family:var(--font-display); font-size:24px; font-weight:700; color:#fff;">
+                        Start Mining <span style="color:var(--text-gold);">Start Earning</span>
+                      </h3>
+                      <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">
+                        Activate your session to earn VEs while staying engaged.
+                      </p>
+                      <div class="mining-progress-track" style="margin-bottom:14px;">
+                        <div class="mining-progress-fill" style="width: 75%;"></div>
+                      </div>
+                      <button class="btn-mining-cta active-mining" style="padding: 10px 20px; font-size:13px;">
+                        MINE NOW <span class="cta-arrow">⚡</span>
+                      </button>
+                    </div>
+
+                    <div class="mining-col-right" style="min-height:180px;">
+                      <div style="width:140px; height:140px;">
+                        <img src="assets/badges/03-gold-reward-hunter.svg" alt="Gold Badge" style="width:100%; height:100%; object-fit:contain;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Activity Stream & Achievement Preview -->
+              <div class="grid-2" style="margin-top: -4px;">
+                <div class="card-glass" style="padding: var(--space-4);">
+                  <div style="font-family:var(--font-display); font-size:13px; font-weight:700; margin-bottom:8px;">
+                    Recent Reward Emissions
+                  </div>
+                  <div style="font-size:12px; display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:4px;">
+                      <span>Quantum Hash Cycle #142</span>
+                      <strong style="color:var(--text-gold);">+38 VEs</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:4px;">
+                      <span>Level 03 Milestone Bonus</span>
+                      <strong style="color:var(--text-gold);">+100 VEs</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-glass" style="padding: var(--space-4);">
+                  <div style="font-family:var(--font-display); font-size:13px; font-weight:700; margin-bottom:8px;">
+                    Next Badge in Reach
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:40px; height:40px; flex-shrink:0;">
+                      <img src="assets/badges/04-platinum-elite-earner.svg" alt="Platinum" style="width:100%; height:100%; object-fit:contain;" />
+                    </div>
+                    <div>
+                      <div style="font-size:12px; font-weight:700;">Level 04 — Elite Earner</div>
+                      <div style="font-size:11px; color:var(--text-secondary);">Need 2 more achievements to unlock</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 APPLICATION CONTEXTS SHOWCASE (Item 17) -->
+      <div style="margin-bottom: var(--space-8);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--space-4); margin-bottom:var(--space-6);">
+          <div>
+            <div class="badge-tag blue" style="margin-bottom:6px;">5 REAL-WORLD APPLICATION CONTEXTS</div>
+            <h3 style="font-family:var(--font-display); font-size:var(--text-xl);">
+              Transparent Badge Integration Across the VELOOP Ecosystem
+            </h3>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <a href="#section-prototype" class="btn-pill-action active">1. Dashboard</a>
+            <button class="btn-pill-action" data-goto-tab="achievements">2. Achievements Screen</button>
+            <a href="#context-profile" class="btn-pill-action">3. Profile Page</a>
+            <button class="btn-pill-action gold" id="triggerRewardModalPreviewBtn">4. Reward Modal</button>
+            <button class="btn-pill-action" id="triggerToastPreviewBtn">5. Notification</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Column Previews Grid: Profile, Reward Modal, Notification -->
+      <div class="grid-3" id="context-profile" style="margin-bottom: var(--space-8);">
+        <!-- Context 3: Profile Preview -->
+        <div class="card-glass">
+          <div class="badge-tag gold" style="margin-bottom: var(--space-3);">CONTEXT 3 — PROFILE PAGE</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:var(--space-4);">
+            User Profile Crest Showcase
+          </h4>
+
+          <div style="display:flex; align-items:center; gap:var(--space-3); margin-bottom:var(--space-4); background:rgba(15,23,42,0.6); padding:var(--space-3); border-radius:var(--radius-lg);">
+            <div id="profileMockupAvatar" style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg, #f59e0b, #38bdf8); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; color:#fff;">
+              AM
+            </div>
+            <div>
+              <div id="profileMockupName" style="font-family:var(--font-display); font-size:16px; font-weight:700; color:#fff;">Active Miner</div>
+              <div style="font-size:11px; color:var(--text-secondary);">Member since 2026 • Tier: <strong id="profileMockupTier" style="color:var(--text-gold);">Recruit</strong></div>
+              <div id="profileMockupBalance" style="font-family:var(--font-mono); font-size:11px; color:var(--blue-cyan); margin-top:2px;">VE Balance: 0 VEs</div>
+            </div>
+          </div>
+
+          <div style="font-size:12px; font-weight:700; margin-bottom:8px;">Equipped Crest & Badge Display:</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div style="width:52px; height:52px; border-radius:var(--radius-md); background:var(--bg-surface); padding:4px; border:1px solid var(--gold-500); cursor:pointer;" title="Gold (Equipped)">
+              <img src="assets/badges/03-gold-reward-hunter.svg" alt="Gold" style="width:100%; height:100%; object-fit:contain;" />
+            </div>
+            <div style="width:52px; height:52px; border-radius:var(--radius-md); background:var(--bg-surface); padding:4px; border:1px solid var(--border-medium); cursor:pointer;" title="Silver">
+              <img src="assets/badges/02-silver-rising-star.svg" alt="Silver" style="width:100%; height:100%; object-fit:contain;" />
+            </div>
+            <div style="width:52px; height:52px; border-radius:var(--radius-md); background:var(--bg-surface); padding:4px; border:1px solid var(--border-medium); cursor:pointer;" title="Bronze">
+              <img src="assets/badges/01-bronze-first-step.svg" alt="Bronze" style="width:100%; height:100%; object-fit:contain;" />
+            </div>
+            <div style="width:52px; height:52px; border-radius:var(--radius-md); background:var(--bg-surface); padding:4px; border:1px dashed var(--border-subtle); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:11px;">
+              +7 More
+            </div>
+          </div>
+        </div>
+
+        <!-- Context 4: Reward / Unlock Modal Preview -->
+        <div class="card-glass">
+          <div class="badge-tag gold" style="margin-bottom: var(--space-3);">CONTEXT 4 — REWARD / UNLOCK MODAL</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:var(--space-4);">
+            Celebratory Unlock Modal
+          </h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-4); line-height:1.5;">
+            Modal celebration trigger featuring 3D badge float animation, particle confetti shower, Web Audio chime synthesis, and instant perk activation.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button class="btn-primary" id="openModalLegendBtn" style="width:100%; justify-content:center; font-size:13px; padding:10px 16px;">
+              Launch Unlock Modal (Legend) →
+            </button>
+            <button class="btn-secondary" id="openModalGoldBtn" style="width:100%; justify-content:center; font-size:13px; padding:10px 16px;">
+              Launch Unlock Modal (Gold) →
+            </button>
+          </div>
+        </div>
+
+        <!-- Context 5: Toast Notification Anatomy -->
+        <div class="card-glass">
+          <div class="badge-tag emerald" style="margin-bottom: var(--space-3);">CONTEXT 5 — NOTIFICATION</div>
+          <h4 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:var(--space-4);">
+            Toast Notification Anatomy
+          </h4>
+          <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-4); line-height:1.5;">
+            Floats into bottom-right corner without blocking mining operations. Features transparent badge thumbnail and gold status label.
+          </p>
+
+          <div style="background:rgba(22, 26, 46, 0.95); border:1px solid rgba(245, 158, 11, 0.35); border-radius:var(--radius-lg); padding:var(--space-3) var(--space-4); display:flex; align-items:center; gap:var(--space-3); margin-bottom:var(--space-4);">
+            <div style="width:44px; height:44px; flex-shrink:0;">
+              <img src="assets/badges/03-gold-reward-hunter.svg" alt="Reward Hunter" style="width:100%; height:100%; object-fit:contain;" />
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text-gold); text-transform:uppercase;">
+                Achievement Unlocked
+              </div>
+              <div style="font-family:var(--font-display); font-size:13px; font-weight:700; color:#fff;">
+                Reward Hunter (Level 03)
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-secondary" id="openToastMiniBtn" style="width:100%; justify-content:center; font-size:13px; padding:10px 16px;">
+            Trigger Live Toast Notification
+          </button>
+        </div>
+      </div>
+
+      <!-- FIGMA PROTOTYPE INTERACTION SPECIFICATIONS & STATE MACHINE (Item 18) -->
+      <div class="card-glass" style="margin-top: var(--space-8);">
+        <div class="badge-tag purple" style="margin-bottom: var(--space-3);">FIGMA PROTOTYPE LOGIC</div>
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          Figma Prototype Interaction Architecture & Smart Animate Guidelines
+        </h3>
+        <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-6); max-width:820px; line-height:1.6;">
+          Use these exact parameters when setting up Prototype Mode in Figma to achieve high-fidelity micro-interactions between component variants.
+        </p>
+
+        <!-- Mining Banner Flow -->
+        <h4 style="font-family:var(--font-display); font-size:var(--text-base); color:var(--text-gold); margin-bottom:var(--space-3);">
+          A. Mining Station State Transitions (Idle → Hover → Active → Progress → Reward)
+        </h4>
+        <div style="overflow-x:auto; margin-bottom:var(--space-6);">
+          <table class="tokens-spec-table">
+            <thead>
+              <tr>
+                <th>From State</th>
+                <th>Trigger</th>
+                <th>To State</th>
+                <th>Animation Type</th>
+                <th>Easing Curve & Duration</th>
+                <th>Visual Feedback Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>MiningBanner/Idle</code></td>
+                <td><strong>While Hovering</strong></td>
+                <td><code>MiningBanner/Hover</code></td>
+                <td>Smart Animate</td>
+                <td>Ease Out • 250ms</td>
+                <td>Magnetic coil pre-ignition glow, ambient amber expansion, button elevation</td>
+              </tr>
+              <tr>
+                <td><code>MiningBanner/Hover</code></td>
+                <td><strong>On Click</strong> (CTA Button)</td>
+                <td><code>MiningBanner/Active-75%</code></td>
+                <td>Smart Animate</td>
+                <td>Gentle Spring • 500ms</td>
+                <td>Containment rings accelerate, particle canvas activates, 45:20 countdown begins</td>
+              </tr>
+              <tr>
+                <td><code>MiningBanner/Active-75%</code></td>
+                <td><strong>After Delay</strong> (1500ms)</td>
+                <td><code>MiningBanner/Completed-100%</code></td>
+                <td>Smart Animate</td>
+                <td>Cubic Bezier (0.16, 1, 0.3, 1) • 800ms</td>
+                <td>Progress bar/ring fills to 100%, +50 VEs reached, CTA changes to "Claim 50 VEs"</td>
+              </tr>
+              <tr>
+                <td><code>MiningBanner/Completed-100%</code></td>
+                <td><strong>On Click</strong> ("Claim 50 VEs")</td>
+                <td><code>Toast/Triggered + Wallet Update</code></td>
+                <td>Open Overlay</td>
+                <td>Ease In/Out • 350ms</td>
+                <td>VE tokens animate toward wallet vault, toast surfaces, balance updates to +50 VEs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Badge Flow -->
+        <h4 style="font-family:var(--font-display); font-size:var(--text-base); color:var(--blue-cyan); margin-bottom:var(--space-3);">
+          B. Badge Lifecycle Transitions (Locked → Tooltip → Milestone Modal → Unlock Modal)
+        </h4>
+        <div style="overflow-x:auto;">
+          <table class="tokens-spec-table">
+            <thead>
+              <tr>
+                <th>From State</th>
+                <th>Trigger</th>
+                <th>Target Component</th>
+                <th>Animation Type</th>
+                <th>Figma Overlay Settings</th>
+                <th>Visual Feedback Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Badge/Locked</code></td>
+                <td><strong>While Hovering</strong></td>
+                <td><code>Tooltip/Desktop</code></td>
+                <td>Open Overlay</td>
+                <td>Top Center • Manual • 150ms</td>
+                <td>Surfaces telemetry: Name, Level, Status (Locked), Requirement, Description</td>
+              </tr>
+              <tr>
+                <td><code>Badge/Locked</code></td>
+                <td><strong>On Click</strong></td>
+                <td><code>Modal/LockedMilestone</code></td>
+                <td>Open Overlay</td>
+                <td>Center • Backdrop Blur 16px • 300ms</td>
+                <td>Opens Locked Milestone Modal with requirement, progress (540/1500 VEs) & "Mine VEs" CTA</td>
+              </tr>
+              <tr>
+                <td><code>Badge/Unlocked</code></td>
+                <td><strong>On Click</strong></td>
+                <td><code>Modal/AchievementUnlocked</code></td>
+                <td>Open Overlay</td>
+                <td>Center • Backdrop Blur 16px • 400ms</td>
+                <td>Celebratory modal: badge float animation, particle burst, Web Audio fanfare chime, perks list</td>
+              </tr>
+              <tr>
+                <td><code>Modal/AchievementUnlocked</code></td>
+                <td><strong>On Click</strong> ("Continue")</td>
+                <td><code>Close Overlay → Profile Badge Update</code></td>
+                <td>Close Overlay</td>
+                <td>Ease Out • 200ms</td>
+                <td>Modal dismisses, equipped badge crest updates to newly acquired tier</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         10 — DEVELOPER HANDOFF & SPECIFICATIONS
+         ==================================================================== -->
+    <section id="section-handoff" class="case-section">
+      <div class="section-header">
+        <div class="section-label">10 — Engineering Specs</div>
+        <h2 class="section-title">Developer Handoff Documentation</h2>
+        <p class="section-desc">
+          Complete implementation specifications for engineering teams: design tokens, typography scale, component dimension constraints, animation timing curves, and export-ready SVG badge assets.
+        </p>
+      </div>
+
+      <!-- Quick Code Copy Blocks -->
+      <div class="grid-2" style="margin-bottom: var(--space-8);">
+        <div class="card-glass">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-3);">
+            <strong style="font-size:14px;">Core CSS Design Tokens</strong>
+            <button class="btn-copy-code" data-copy-target="tokenCodeBlock">Copy CSS Tokens</button>
+          </div>
+          <div id="tokenCodeBlock" class="handoff-code-block">
+/* VELOOP Rewards — Token Extract */
+:root {
+  --bg-app: #161827;
+  --bg-surface: #1c2036;
+  --gold-500: #f59e0b;
+  --blue-cyan: #38bdf8;
+  --gem-emerald: #10b981;
+  --gem-sapphire: #2563eb;
+  --gem-ruby: #e11d48;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-xl: 24px;
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}</div>
+        </div>
+
+        <div class="card-glass">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-3);">
+            <strong style="font-size:14px;">Responsive Breakpoints Matrix</strong>
+            <button class="btn-copy-code" data-copy-target="breakpointCodeBlock">Copy Breakpoints</button>
+          </div>
+          <div id="breakpointCodeBlock" class="handoff-code-block">
+/* Media Query Constraints */
+@media (min-width: 1280px) {
+  /* Desktop: Height 410–450px | Horizontal 2-col */
+}
+@media (max-width: 1024px) and (min-width: 768px) {
+  /* Tablet: Height 380–540px | Rebalanced layout */
+}
+@media (max-width: 767px) {
+  /* Mobile: Height 330–520px | Vertical stack */
+}</div>
+        </div>
+      </div>
+
+      <!-- Figma Reusable Component System Architecture Table (Item 20) -->
+      <div class="card-glass" style="margin-bottom: var(--space-8);">
+        <div class="badge-tag gold" style="margin-bottom: var(--space-3);">DESIGN SYSTEM ARCHITECTURE</div>
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          Figma Component Master Library & Naming Convention
+        </h3>
+        <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-6); max-width:820px; line-height:1.6;">
+          Structured component hierarchy with exact naming conventions, variants, properties, and Auto Layout constraints for recreating the design system in Figma.
+        </p>
+
+        <div style="overflow-x:auto;">
+          <table class="tokens-spec-table">
+            <thead>
+              <tr>
+                <th>Component Group</th>
+                <th>Master Component Name</th>
+                <th>Variants / Properties</th>
+                <th>Auto Layout & Constraints</th>
+                <th>Functional Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mining Banner</strong></td>
+                <td><code>MiningBanner/Desktop</code><br><code>MiningBanner/Tablet</code><br><code>MiningBanner/Mobile</code></td>
+                <td>State: <code>Default</code>, <code>Hover</code>, <code>Active-75%</code>, <code>Completed-100%</code></td>
+                <td>Desktop: 1440w × 430h (Fixed H)<br>Tablet: Fill w × 460h<br>Mobile: Fill w × 480h</td>
+                <td>Flagship extraction station HUD with dual telemetry tiles, live countdown, and interactive CTA</td>
+              </tr>
+              <tr>
+                <td><strong>Mining Telemetry</strong></td>
+                <td><code>Telemetry/ProgressDual</code><br><code>Telemetry/RewardCounter</code></td>
+                <td>Type: <code>Bar+Ring</code>, <code>LinearOnly</code><br>Status: <code>Active</code>, <code>Completed</code></td>
+                <td>Hug Contents H, Fill W<br>Padding: 12px 16px<br>Radius: 12px</td>
+                <td>Displays progress ring (44px), progress bar, live countdown (45:20 remaining), and VE yield (+38 VEs)</td>
+              </tr>
+              <tr>
+                <td><strong>Mining CTA</strong></td>
+                <td><code>Button/MiningCTA</code></td>
+                <td>State: <code>Default</code>, <code>Hover</code>, <code>Active</code>, <code>Completed</code></td>
+                <td>Hug Contents, Min H: 48px<br>Padding: 14px 28px<br>Radius: 9999px</td>
+                <td>Primary station trigger with gold sheen, pulsing status beacon, and emerald completion claim state</td>
+              </tr>
+              <tr>
+                <td><strong>Achievement Badge</strong></td>
+                <td><code>Badge/01-Bronze</code> through<br><code>Badge/10-Legend</code></td>
+                <td>Tier: <code>Bronze</code> → <code>Legend</code><br>State: <code>Unlocked</code>, <code>Locked</code>, <code>Hover</code></td>
+                <td>1:1 Aspect Ratio (200 × 200px)<br>100% Transparent Background<br>Scalable Vector SVG</td>
+                <td>Semi-3D metallic and natural gemstone heraldic medallions with central VE core insignia</td>
+              </tr>
+              <tr>
+                <td><strong>Badge Card</strong></td>
+                <td><code>Card/BadgeCard</code></td>
+                <td>Status: <code>Unlocked</code>, <code>Locked</code><br>Surface: <code>Dark</code>, <code>Light</code>, <code>Obsidian</code></td>
+                <td>Auto Layout Vertical<br>Padding: 20px 16px<br>Radius: 24px</td>
+                <td>Interactive collection card with badge art frame, level pill, material label, and status indicator</td>
+              </tr>
+              <tr>
+                <td><strong>Badge Tooltip</strong></td>
+                <td><code>Tooltip/Desktop</code></td>
+                <td>Status: <code>Unlocked</code>, <code>Locked</code></td>
+                <td>Auto Layout Vertical<br>Max W: 280px<br>Radius: 12px • Blur: 16px</td>
+                <td>Desktop hover HUD displaying Name, Level, Status, Requirement, and Lore Description</td>
+              </tr>
+              <tr>
+                <td><strong>Unlock Modal</strong></td>
+                <td><code>Modal/AchievementUnlocked</code></td>
+                <td>State: <code>Active</code>, <code>Dismissed</code><br>Tier: <code>Bronze</code> → <code>Legend</code></td>
+                <td>Fixed W: 480px<br>Padding: 40px 32px<br>Radius: 32px • Blur: 20px</td>
+                <td>Full-screen overlay celebrating badge acquisition with floating badge, confetti, audio fanfare, and perks</td>
+              </tr>
+              <tr>
+                <td><strong>Milestone Modal</strong></td>
+                <td><code>Modal/LockedMilestone</code></td>
+                <td>Tier: <code>Platinum</code> → <code>Legend</code><br>State: <code>Active</code>, <code>Dismissed</code></td>
+                <td>Fixed W: 480px<br>Padding: 36px 28px<br>Radius: 32px • Blur: 20px</td>
+                <td>Inspection modal for locked badges showing exact VE requirements, progress bar (540/1500 VEs), and CTA</td>
+              </tr>
+              <tr>
+                <td><strong>Toast Notification</strong></td>
+                <td><code>Notification/Toast</code></td>
+                <td>Type: <code>BadgeUnlocked</code>, <code>MiningReward</code></td>
+                <td>W: 360px × H: Auto<br>Padding: 12px 16px<br>Radius: 16px • Blur: 16px</td>
+                <td>Lightweight non-intrusive bottom-right toast with thumbnail badge and golden unlock alert</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Export-Ready Standalone Badge Asset Cards -->
+      <div class="card-glass" style="margin-bottom: var(--space-8);">
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); margin-bottom:var(--space-4);">
+          Export-Ready Standalone SVG Badge Assets (Transparent Backgrounds)
+        </h3>
+        <p style="font-size:var(--text-sm); color:var(--text-secondary); margin-bottom:var(--space-6);">
+          All 10 badges are pure vector SVG assets with 100% transparent backgrounds. Click "Copy SVG" to copy raw markup directly to clipboard, "Download" for the <code>.svg</code> file, or "PNG (400px)" for transparent raster exports.
+        </p>
+
+        <div id="handoffBadgeAssetList" class="grid-2">
+          <!-- Rendered dynamically via js/bundle.js -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       INTERACTIVE COMPONENTS: MODALS & TOASTS
+       ==================================================================== -->
+
+  <!-- 1. Achievement Unlocked Celebratory Modal -->
+  <div id="achievementModal" class="modal-backdrop">
+    <div class="modal-card">
+      <button id="modalCloseBtn" class="modal-close-btn" title="Close Modal">✕</button>
+      <canvas id="modalConfettiCanvas" class="modal-confetti-canvas"></canvas>
+
+      <div class="modal-inner-content">
+        <div class="modal-pretitle">Achievement Unlocked!</div>
+
+        <div class="modal-badge-showcase">
+          <img id="modalBadgeImage" src="assets/badges/03-gold-reward-hunter.svg" alt="Badge Preview" />
+        </div>
+
+        <h3 id="modalBadgeTitle" class="modal-badge-title">Gold — Reward Hunter</h3>
+        <p id="modalBadgeSubtitle" class="modal-badge-subtitle">
+          Congratulations! You've unlocked Level 03. Persistent mining and high yield achievements recognized.
+        </p>
+
+        <!-- Unlocked Perks List -->
+        <div id="modalRewardPills" class="modal-reward-pills">
+          <div class="modal-reward-item">✓ +5% Mining Hash Boost</div>
+          <div class="modal-reward-item">✓ Priority Mining Pool</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: var(--space-2);">
+          <button id="modalProgressionBtn" class="btn-primary" style="width: 100%; justify-content: center; font-size: 15px; padding: 14px 24px;">
+            View Badge Progression →
+          </button>
+          <button id="modalContinueBtn" class="btn-secondary" style="width: 100%; justify-content: center; font-size: 14px; padding: 12px 24px;">
+            Continue Mining ⚡
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Locked Badge Milestone Inspection Modal (Item 14 & 18) -->
+  <div id="lockedBadgeModal" class="modal-backdrop">
+    <div class="modal-card locked-modal-card">
+      <button id="lockedModalCloseBtn" class="modal-close-btn" title="Close Modal">✕</button>
+
+      <div class="modal-inner-content">
+        <div class="modal-pretitle locked-pretitle">
+          <span>🔒 Locked Milestone</span>
+        </div>
+
+        <div class="modal-badge-showcase locked-badge-showcase">
+          <img id="lockedModalBadgeImage" src="assets/badges/04-platinum-elite-earner.svg" alt="Locked Badge Preview" />
+        </div>
+
+        <h3 id="lockedModalBadgeTitle" class="modal-badge-title">Platinum — Elite Earner</h3>
+        <p id="lockedModalBadgeSubtitle" class="modal-badge-subtitle">
+          This achievement tier is currently locked. Complete the required mining milestones below to unlock this crest and permanent tier perks.
+        </p>
+
+        <!-- Requirement & Progress Box -->
+        <div class="locked-req-card" style="width:100%; background:rgba(15,23,42,0.7); border:1px solid rgba(56,189,248,0.25); border-radius:var(--radius-lg); padding:var(--space-4); margin-bottom:var(--space-6); text-align:left;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-gold); text-transform:uppercase;">Milestone Requirement:</span>
+            <span id="lockedModalProgressPercent" style="font-family:var(--font-mono); font-size:11px; color:var(--blue-cyan); font-weight:700;">36% Complete</span>
+          </div>
+          <div id="lockedModalRequirement" style="font-size:13px; color:#fff; font-weight:600; margin-bottom:10px; line-height:1.4;">
+            Earn 1,500 VEs & complete 25 high-yield mining sessions
+          </div>
+          <div class="mining-progress-track" style="height:8px; margin-bottom:6px;">
+            <div id="lockedModalProgressFill" class="mining-progress-fill" style="width:36%; background:linear-gradient(90deg, #38bdf8, #818cf8);"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-secondary); font-family:var(--font-mono);">
+            <span id="lockedModalProgressCurrent">540 VEs Earned</span>
+            <span id="lockedModalProgressTarget">1,500 VEs Required</span>
+          </div>
+        </div>
+
+        <!-- Upcoming Perks to Unlock -->
+        <div style="font-size:12px; font-weight:700; color:var(--text-secondary); margin-bottom:8px; align-self:flex-start;">
+          Perks Unlocked at this Tier:
+        </div>
+        <div id="lockedModalRewardPills" class="modal-reward-pills" style="margin-bottom:var(--space-8); justify-content:flex-start; width:100%;">
+          <div class="modal-reward-item">🔒 +8% Mining Hash Boost</div>
+          <div class="modal-reward-item">🔒 Zero Network Claim Fees</div>
+          <div class="modal-reward-item">🔒 VIP Support Desk</div>
+        </div>
+
+        <!-- Action CTA: Switch to Mining Banner to Advance -->
+        <div style="display:flex; gap:12px; width:100%;">
+          <button id="lockedModalMineBtn" class="btn-primary" style="flex:1; justify-content:center; font-size:14px; padding:12px 20px;">
+            Mine VEs to Advance →
+          </button>
+          <button id="lockedModalDismissBtn" class="btn-secondary" style="justify-content:center; font-size:14px; padding:12px 20px;">
+            Dismiss
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Preview Component -->
+  <div class="toast-preview-container">
+    <div id="toastNotification" class="toast-notification-card">
+      <div class="toast-badge-thumb">
+        <img src="assets/badges/03-gold-reward-hunter.svg" alt="Badge Thumb" />
+      </div>
+      <div class="toast-body">
+        <span class="toast-tag">Achievement Unlocked</span>
+        <strong class="toast-title">Reward Hunter</strong>
+        <span class="toast-desc">You've unlocked a new achievement!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="case-footer">
+    <div class="app-container">
+      <div class="case-footer-inner">
+        <div>
+          <strong style="color:#fff;">VELOOP Rewards</strong> — Comprehensive UI/UX Portfolio Case Study
+        </div>
+        <div style="font-family:var(--font-mono); font-size:12px;">
+          Palette: #161827 Dark Slate • 10-Tier Semi-3D Badge System • Zero-Build Portable Web App
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Universal Application Controller Bundle -->
+  <script src="js/bundle.js"></script>
+</body>
+</html>

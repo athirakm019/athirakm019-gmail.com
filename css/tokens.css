@@ -1,0 +1,136 @@
+/* ==========================================================================
+   VELOP REWARDS — DESIGN SYSTEM TOKENS
+   Theme: Fintech + Futuristic Mining + Premium Gamification
+   Base Palette Background: #161827
+   ========================================================================== */
+
+:root {
+  /* Core Foundation Colors Required by Assignment */
+  --bg-app: #161827;
+  --bg-mining-panel: #20263A;
+  --bg-secondary-ui: #2A3042;
+  --gold-primary: #F2A900;
+  --text-primary: #F5F5F5;
+  --text-secondary: #9AA4B8;
+
+  --bg-app-rgb: 22, 24, 39;
+  --bg-base: #111320;
+  --bg-surface: #20263A;
+  --bg-surface-rgb: 32, 38, 58;
+  --bg-surface-elevated: #2A3042;
+  --bg-surface-glass: rgba(32, 38, 58, 0.85);
+  --bg-surface-glass-hover: rgba(42, 48, 66, 0.9);
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.25);
+  --border-gold-glow: rgba(242, 169, 0, 0.4);
+  --border-blue-glow: rgba(56, 189, 248, 0.35);
+
+  /* Typography / Text Colors */
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+  --text-gold: #F2A900;
+  --text-gold-light: #fef08a;
+  --text-blue: #38bdf8;
+
+  /* Accent: Gold / Rewards & Achievement */
+  --gold-50: #fffbeb;
+  --gold-100: #fef3c7;
+  --gold-200: #fde68a;
+  --gold-300: #fcd34d;
+  --gold-400: #fbbf24;
+  --gold-500: #F2A900;
+  --gold-600: #d97706;
+  --gold-700: #b45309;
+  --gold-800: #92400e;
+  --gold-900: #78350f;
+
+  /* Accent: Technology & Trust (Blue / Silver / Navy) */
+  --navy-deep: #0b1120;
+  --navy-surface: #1e293b;
+  --blue-soft: #60a5fa;
+  --blue-cyan: #38bdf8;
+  --blue-glow: rgba(56, 189, 248, 0.25);
+  --silver-light: #f1f5f9;
+  --silver-mid: #cbd5e1;
+  --silver-dark: #64748b;
+
+  /* Accent: Muted Purple */
+  --purple-muted: #818cf8;
+  --purple-deep: #4338ca;
+  --purple-bg: rgba(99, 102, 241, 0.15);
+
+  /* Gemstone Accents (Sophisticated & Deep — strictly no neon) */
+  --gem-emerald-light: #34d399;
+  --gem-emerald: #10b981;
+  --gem-emerald-deep: #047857;
+  --gem-emerald-bg: #064e3b;
+
+  --gem-sapphire-light: #93c5fd;
+  --gem-sapphire: #2563eb;
+  --gem-sapphire-deep: #1d4ed8;
+  --gem-sapphire-bg: #172554;
+
+  --gem-ruby-light: #fb7185;
+  --gem-ruby: #e11d48;
+  --gem-ruby-deep: #be123c;
+  --gem-ruby-bg: #4c0519;
+
+  /* Status Colors */
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-info: #38bdf8;
+  --status-locked: #64748b;
+
+  /* Typography Scales (Inter Primary as Required) */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+
+  /* Spacing Tokens */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* Shadows & Depth */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 36px -4px rgba(0, 0, 0, 0.55);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-gold-subtle: 0 0 30px -5px rgba(245, 158, 11, 0.22);
+  --shadow-blue-subtle: 0 0 30px -5px rgba(56, 189, 248, 0.22);
+
+  /* Animation Timings */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}

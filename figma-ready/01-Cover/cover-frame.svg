@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1000" width="1440" height="1000" fill="none">
+  <defs>
+    <radialGradient id="covBg" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#20263A"/>
+      <stop offset="60%" stop-color="#161827"/>
+      <stop offset="100%" stop-color="#0c0e17"/>
+    </radialGradient>
+    <radialGradient id="covGlowGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F2A900" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#F2A900" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="covGlowCyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="covGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="30%" stop-color="#fde047"/>
+      <stop offset="70%" stop-color="#F2A900"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1440" height="1000" fill="url(#covBg)"/>
+  <circle cx="720" cy="380" r="480" fill="url(#covGlowGold)"/>
+  <circle cx="1100" cy="200" r="400" fill="url(#covGlowCyan)"/>
+  <circle cx="200" cy="700" r="400" fill="url(#covGlowCyan)"/>
+
+  <!-- Top Header Navigation -->
+  <g transform="translate(80, 50)">
+    <!-- Logo -->
+    <rect x="0" y="0" width="36" height="36" rx="10" fill="#20263A" stroke="#F2A900" stroke-width="1.5"/>
+    <text x="18" y="24" fill="#F2A900" font-family="'Inter', sans-serif" font-size="16" font-weight="900" text-anchor="middle">V</text>
+    <text x="48" y="24" fill="#F5F5F5" font-family="'Inter', sans-serif" font-size="16" font-weight="800" letter-spacing="1">VELOOP REWARDS</text>
+    <text x="210" y="24" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="12" font-weight="500">UI/UX CASE STUDY</text>
+
+    <!-- Task 11 Badge -->
+    <rect x="1060" y="4" width="220" height="30" rx="15" fill="rgba(242,169,0,0.12)" stroke="#F2A900" stroke-width="1"/>
+    <text x="1170" y="23" fill="#F2A900" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">TASK 11 — INTERNSHIP</text>
+  </g>
+
+  <!-- Hero Main Heading Block -->
+  <g transform="translate(720, 220)" text-anchor="middle">
+    <!-- Category Pill -->
+    <rect x="-180" y="-30" width="360" height="32" rx="16" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1"/>
+    <text x="0" y="-9" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">FINTECH GAMIFIED REWARD SYSTEM</text>
+
+    <!-- Main Title -->
+    <text x="0" y="55" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="64" font-weight="900" letter-spacing="-1.5">VELOOP Rewards</text>
+    <!-- Subtitle with Gold Gradient -->
+    <text x="0" y="115" fill="url(#covGoldGrad)" font-family="'Inter', sans-serif" font-size="28" font-weight="700">Mining Station &amp; 10-Tier Achievement Badge System</text>
+    
+    <!-- Description Paragraph -->
+    <text x="0" y="165" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="16" font-weight="400">
+      A comprehensive fintech rewards architecture combining high-frequency quantum mining telemetry
+    </text>
+    <text x="0" y="195" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="16" font-weight="400">
+      with prestigious heraldic vector medallions designed for sustainable institutional retention.
+    </text>
+  </g>
+
+  <!-- Core 7-Stage Reward Loop Ribbon -->
+  <g transform="translate(720, 500)">
+    <rect x="-420" y="0" width="840" height="52" rx="16" fill="#20263A" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="-370" y="32" fill="#9AA4B8" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">START</text>
+    <text x="-300" y="32" fill="rgba(255,255,255,0.2)" font-family="'Inter', sans-serif" font-size="14">→</text>
+    <text x="-240" y="32" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">MINE NOW</text>
+    <text x="-140" y="32" fill="rgba(255,255,255,0.2)" font-family="'Inter', sans-serif" font-size="14">→</text>
+    <text x="-90" y="32" fill="#F2A900" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">EARN VEs</text>
+    <text x="0" y="32" fill="rgba(255,255,255,0.2)" font-family="'Inter', sans-serif" font-size="14">→</text>
+    <text x="40" y="32" fill="#9AA4B8" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">PROGRESS</text>
+    <text x="135" y="32" fill="rgba(255,255,255,0.2)" font-family="'Inter', sans-serif" font-size="14">→</text>
+    <text x="175" y="32" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">ACHIEVE</text>
+    <text x="260" y="32" fill="rgba(255,255,255,0.2)" font-family="'Inter', sans-serif" font-size="14">→</text>
+    <text x="300" y="32" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">UNLOCK</text>
+  </g>
+
+  <!-- 3 Pillar Cards Row -->
+  <g transform="translate(80, 610)">
+    <!-- Card 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="400" height="260" rx="20" fill="#20263A" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <rect x="24" y="24" width="130" height="24" rx="12" fill="rgba(242,169,0,0.12)"/>
+      <text x="89" y="40" fill="#F2A900" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">01 / MINING STATION</text>
+      <text x="24" y="85" fill="#F5F5F5" font-family="'Inter', sans-serif" font-size="20" font-weight="700">Quantum Extraction Node</text>
+      <text x="24" y="125" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">Desktop 1440 × 430 banner with real-time</text>
+      <text x="24" y="148" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">telemetry: +38 VE yield, live countdown timer,</text>
+      <text x="24" y="171" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">circular SVG ring, and HUD screen.</text>
+      <text x="24" y="220" fill="#F2A900" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">4 Interactive States • 6-Stage Flow →</text>
+    </g>
+
+    <!-- Card 2 -->
+    <g transform="translate(440, 0)">
+      <rect width="400" height="260" rx="20" fill="#20263A" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <rect x="24" y="24" width="135" height="24" rx="12" fill="rgba(56,189,248,0.12)"/>
+      <text x="91" y="40" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">02 / HERALDIC SYSTEM</text>
+      <text x="24" y="85" fill="#F5F5F5" font-family="'Inter', sans-serif" font-size="20" font-weight="700">10-Level Semi-3D Medallions</text>
+      <text x="24" y="125" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">Bronze to Legend progression crafted as pure</text>
+      <text x="24" y="148" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">vector SVGs on 200×200 viewBoxes with</text>
+      <text x="24" y="171" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">100% transparent backgrounds.</text>
+      <text x="24" y="220" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">Natural Gemstones • Metallic Alloys →</text>
+    </g>
+
+    <!-- Card 3 -->
+    <g transform="translate(880, 0)">
+      <rect width="400" height="260" rx="20" fill="#20263A" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <rect x="24" y="24" width="135" height="24" rx="12" fill="rgba(16,185,129,0.12)"/>
+      <text x="91" y="40" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">03 / EXPERIENCE FLOW</text>
+      <text x="24" y="85" fill="#F5F5F5" font-family="'Inter', sans-serif" font-size="20" font-weight="700">Sequential Milestones &amp; Handoff</text>
+      <text x="24" y="125" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">Celebratory modal with confetti, harmonic SFX,</text>
+      <text x="24" y="148" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">5 real-world usage mockups, responsive simulator,</text>
+      <text x="24" y="171" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="13" font-weight="400">and one-click developer token exports.</text>
+      <text x="24" y="220" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">Smart Animate • Complete Spec →</text>
+    </g>
+  </g>
+
+  <!-- Bottom Metadata Bar -->
+  <g transform="translate(80, 930)">
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="0" y="30" fill="#9AA4B8" font-family="'Inter', sans-serif" font-size="12">Color Palette: #161827 Dark Slate • #20263A Mining Panel • #2A3042 Secondary UI • #F2A900 Warm Gold</text>
+    <text x="1280" y="30" fill="#9AA4B8" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="end">Inter &amp; JetBrains Mono • Zero-Build Web &amp; Figma Delivery</text>
+  </g>
+</svg>

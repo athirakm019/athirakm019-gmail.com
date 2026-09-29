@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — VELOOP Rewards</title>
+  
+  <!-- Design System Tokens & Global Styles -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+
+  <!-- Authentication SDK & Immediate Route Guard -->
+  <script src="js/auth.js"></script>
+  <script>
+    // If the user already holds an active session, redirect straight to the dashboard
+    VeloopAuth.redirectIfAuthenticated('index.html');
+  </script>
+</head>
+<body class="auth-page">
+
+  <!-- Ambient Glow Effects -->
+  <div class="auth-ambient-orb gold"></div>
+  <div class="auth-ambient-orb cyan"></div>
+
+  <!-- Minimal Header -->
+  <header class="auth-header">
+    <div class="app-container">
+      <div class="auth-header-inner">
+        <a href="index.html" class="brand-badge" style="text-decoration:none;">
+          <div class="brand-logo-gem">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#ffffff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="brand-meta">
+            <div class="brand-title">
+              VELOP REWARDS <span class="tag">SECURE PORTAL</span>
+            </div>
+            <div class="brand-sub">Mine & Earn + 10-Tier Achievement System</div>
+          </div>
+        </a>
+
+        <div class="auth-header-badge">
+          <span class="dot"></span>
+          <span>SSL 256-BIT ENCRYPTED</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Auth Main Content -->
+  <main class="auth-main">
+    <div class="auth-card">
+      <div class="auth-card-body">
+
+        <!-- Brand Crest & Header -->
+        <div class="auth-brand-lockup">
+          <div class="auth-logo-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+              <line x1="12" y1="22" x2="12" y2="15.5"></line>
+              <polyline points="22 8.5 12 15.5 2 8.5"></polyline>
+              <polyline points="2 15.5 12 8.5 22 15.5"></polyline>
+            </svg>
+          </div>
+          <h1 class="auth-title" id="authViewHeading">Welcome Back</h1>
+          <p class="auth-subtitle" id="authViewSubheading">
+            Enter your credentials to access your mining station and badge collection.
+          </p>
+        </div>
+
+        <!-- View Navigation Tabs -->
+        <div class="auth-tabs" id="authTabs" role="tablist">
+          <button class="auth-tab-btn active" id="tabLogin" role="tab" aria-selected="true" type="button">
+            Sign In
+          </button>
+          <button class="auth-tab-btn" id="tabSignup" role="tab" aria-selected="false" type="button">
+            Create Account
+          </button>
+        </div>
+
+        <!-- Global Alert Box -->
+        <div class="auth-alert" id="globalAlert" role="alert">
+          <svg class="alert-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="globalAlertMessage">Alert text</span>
+        </div>
+
+        <!-- ================================================================
+             VIEW 1: SIGN IN FORM
+             ================================================================ -->
+        <div class="auth-form-view active" id="viewLogin">
+          <form id="loginForm" novalidate>
+            <!-- Email / Username Field -->
+            <div class="form-group">
+              <label class="form-label" for="loginEmail">
+                Email Address or Username <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="email" 
+                  id="loginEmail" 
+                  name="email" 
+                  class="form-input" 
+                  placeholder="name@example.com" 
+                  autocomplete="username" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </span>
+              </div>
+              <div class="field-error-msg" id="loginEmailError"></div>
+            </div>
+
+            <!-- Password Field with Accessible Toggle -->
+            <div class="form-group">
+              <label class="form-label" for="loginPassword">
+                Password <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="password" 
+                  id="loginPassword" 
+                  name="password" 
+                  class="form-input" 
+                  placeholder="Enter your password" 
+                  autocomplete="current-password" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+                <button 
+                  type="button" 
+                  class="password-toggle-btn" 
+                  data-target="loginPassword" 
+                  aria-label="Show password" 
+                  title="Toggle password visibility"
+                >
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <div class="field-error-msg" id="loginPasswordError"></div>
+            </div>
+
+            <!-- Options Row: Remember Me & Forgot Password -->
+            <div class="form-row-between">
+              <label class="checkbox-label" for="loginRemember">
+                <input type="checkbox" id="loginRemember" name="remember" class="custom-checkbox" />
+                <span>Remember me (30 days)</span>
+              </label>
+
+              <a href="#forgot" class="auth-link" id="linkForgotPassword">
+                Forgot password?
+              </a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-auth-submit" id="btnLoginSubmit">
+              <span class="spinner"></span>
+              <span class="btn-text">SIGN IN TO VELOOP</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+
+          <div class="auth-card-footer">
+            Don't have an account? 
+            <a href="#signup" class="auth-link" id="linkGoToSignup">Create one now</a>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             VIEW 2: SIGN UP / REGISTRATION FORM
+             ================================================================ -->
+        <div class="auth-form-view" id="viewSignup">
+          <form id="signupForm" novalidate>
+            <!-- Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="signupName">
+                Full Name <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="signupName" 
+                  name="name" 
+                  class="form-input" 
+                  placeholder="Enter your full name" 
+                  autocomplete="name" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </span>
+              </div>
+              <div class="field-error-msg" id="signupNameError"></div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="signupEmail">
+                Email Address <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="email" 
+                  id="signupEmail" 
+                  name="email" 
+                  class="form-input" 
+                  placeholder="name@example.com" 
+                  autocomplete="email" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </span>
+              </div>
+              <div class="field-error-msg" id="signupEmailError"></div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label class="form-label" for="signupPassword">
+                Create Password <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="password" 
+                  id="signupPassword" 
+                  name="password" 
+                  class="form-input" 
+                  placeholder="At least 8 characters" 
+                  autocomplete="new-password" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+                <button 
+                  type="button" 
+                  class="password-toggle-btn" 
+                  data-target="signupPassword" 
+                  aria-label="Show password" 
+                  title="Toggle password visibility"
+                >
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Live Password Requirements Tracker -->
+              <div class="password-requirements-box" id="passwordReqs">
+                <div class="req-header">Security Checklist</div>
+                <ul class="req-list">
+                  <li class="req-item" id="reqLength">
+                    <span class="req-indicator">✓</span>
+                    <span>8+ characters</span>
+                  </li>
+                  <li class="req-item" id="reqUpper">
+                    <span class="req-indicator">✓</span>
+                    <span>Uppercase (A-Z)</span>
+                  </li>
+                  <li class="req-item" id="reqLower">
+                    <span class="req-indicator">✓</span>
+                    <span>Lowercase (a-z)</span>
+                  </li>
+                  <li class="req-item" id="reqNumber">
+                    <span class="req-indicator">✓</span>
+                    <span>Number (0-9)</span>
+                  </li>
+                  <li class="req-item" id="reqSpecial" style="grid-column: span 2;">
+                    <span class="req-indicator">✓</span>
+                    <span>Special character (!@#$%^&amp;*)</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="field-error-msg" id="signupPasswordError"></div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label class="form-label" for="signupConfirmPassword">
+                Confirm Password <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="password" 
+                  id="signupConfirmPassword" 
+                  name="confirmPassword" 
+                  class="form-input" 
+                  placeholder="Re-type your password" 
+                  autocomplete="new-password" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </span>
+                <button 
+                  type="button" 
+                  class="password-toggle-btn" 
+                  data-target="signupConfirmPassword" 
+                  aria-label="Show password" 
+                  title="Toggle password visibility"
+                >
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <div class="field-error-msg" id="signupConfirmError"></div>
+            </div>
+
+            <!-- Terms & Conditions Checkbox -->
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label class="checkbox-label" for="signupTerms">
+                <input type="checkbox" id="signupTerms" name="terms" class="custom-checkbox" required />
+                <span style="font-size: 13px;">I agree to the VELOOP Mining Protocol Terms &amp; Privacy Policy</span>
+              </label>
+              <div class="field-error-msg" id="signupTermsError"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-auth-submit" id="btnSignupSubmit">
+              <span class="spinner"></span>
+              <span class="btn-text">CREATE ACCOUNT &amp; START MINING</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+
+          <div class="auth-card-footer">
+            Already have an account? 
+            <a href="#login" class="auth-link" id="linkGoToLogin">Sign in here</a>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             VIEW 3: FORGOT / RESET PASSWORD FORM
+             ================================================================ -->
+        <div class="auth-form-view" id="viewForgot">
+          <form id="forgotForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="forgotEmail">
+                Registered Account Email <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="email" 
+                  id="forgotEmail" 
+                  name="email" 
+                  class="form-input" 
+                  placeholder="name@example.com" 
+                  autocomplete="email" 
+                  required 
+                />
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </span>
+              </div>
+              <div class="field-error-msg" id="forgotEmailError"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-auth-submit" id="btnForgotSubmit">
+              <span class="spinner"></span>
+              <span class="btn-text">SEND RECOVERY INSTRUCTIONS</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+
+          <div class="auth-card-footer">
+            Remembered your credentials? 
+            <a href="#login" class="auth-link" id="linkBackToLogin">Back to Sign In</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Controller Script for Login View Transitions & Validation -->
+  <script>
+    (function() {
+      'use strict';
+
+      // Elements
+      const tabLogin = document.getElementById('tabLogin');
+      const tabSignup = document.getElementById('tabSignup');
+      const viewLogin = document.getElementById('viewLogin');
+      const viewSignup = document.getElementById('viewSignup');
+      const viewForgot = document.getElementById('viewForgot');
+      const heading = document.getElementById('authViewHeading');
+      const subheading = document.getElementById('authViewSubheading');
+      const globalAlert = document.getElementById('globalAlert');
+      const globalAlertMessage = document.getElementById('globalAlertMessage');
+      const tabsWrapper = document.getElementById('authTabs');
+
+      // Forms
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const forgotForm = document.getElementById('forgotForm');
+
+      // Password Requirement Items
+      const signupPassword = document.getElementById('signupPassword');
+      const reqLength = document.getElementById('reqLength');
+      const reqUpper = document.getElementById('reqUpper');
+      const reqLower = document.getElementById('reqLower');
+      const reqNumber = document.getElementById('reqNumber');
+      const reqSpecial = document.getElementById('reqSpecial');
+
+      // Show / Hide Alert
+      function showAlert(type, message) {
+        globalAlert.className = 'auth-alert visible ' + type;
+        globalAlertMessage.textContent = message;
+      }
+      function hideAlert() {
+        globalAlert.className = 'auth-alert';
+        globalAlertMessage.textContent = '';
+      }
+
+      // View Switcher
+      function setView(viewName) {
+        hideAlert();
+        clearAllErrors();
+
+        if (viewName === 'login') {
+          tabsWrapper.style.display = 'flex';
+          tabLogin.classList.add('active');
+          tabSignup.classList.remove('active');
+          viewLogin.classList.add('active');
+          viewSignup.classList.remove('active');
+          viewForgot.classList.remove('active');
+          heading.textContent = 'Welcome Back';
+          subheading.textContent = 'Enter your credentials to access your mining station and badge collection.';
+          document.title = 'Sign In — VELOOP Rewards';
+        } else if (viewName === 'signup') {
+          tabsWrapper.style.display = 'flex';
+          tabLogin.classList.remove('active');
+          tabSignup.classList.add('active');
+          viewLogin.classList.remove('active');
+          viewSignup.classList.add('active');
+          viewForgot.classList.remove('active');
+          heading.textContent = 'Create Account';
+          subheading.textContent = 'Join VELOOP Rewards to start mining VEs & unlock heraldic badges.';
+          document.title = 'Create Account — VELOOP Rewards';
+        } else if (viewName === 'forgot') {
+          tabsWrapper.style.display = 'none';
+          viewLogin.classList.remove('active');
+          viewSignup.classList.remove('active');
+          viewForgot.classList.add('active');
+          heading.textContent = 'Reset Password';
+          subheading.textContent = 'Enter the email associated with your VELOOP account to receive recovery instructions.';
+          document.title = 'Reset Password — VELOOP Rewards';
+        }
+      }
+
+      tabLogin.addEventListener('click', () => setView('login'));
+      tabSignup.addEventListener('click', () => setView('signup'));
+      document.getElementById('linkGoToSignup').addEventListener('click', (e) => {
+        e.preventDefault();
+        setView('signup');
+      });
+      document.getElementById('linkGoToLogin').addEventListener('click', (e) => {
+        e.preventDefault();
+        setView('login');
+      });
+      document.getElementById('linkForgotPassword').addEventListener('click', (e) => {
+        e.preventDefault();
+        setView('forgot');
+      });
+      document.getElementById('linkBackToLogin').addEventListener('click', (e) => {
+        e.preventDefault();
+        setView('login');
+      });
+
+      // Show/Hide Password Toggle
+      document.querySelectorAll('.password-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          const eyeOpen = btn.querySelector('.eye-open');
+          const eyeClosed = btn.querySelector('.eye-closed');
+
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.setAttribute('aria-label', 'Hide password');
+            eyeOpen.style.display = 'none';
+            eyeClosed.style.display = 'block';
+          } else {
+            input.type = 'password';
+            btn.setAttribute('aria-label', 'Show password');
+            eyeOpen.style.display = 'block';
+            eyeClosed.style.display = 'none';
+          }
+        });
+      });
+
+      // Live Password Requirements Tracker
+      signupPassword.addEventListener('input', () => {
+        const val = signupPassword.value;
+        const checks = VeloopAuth.checkPasswordRequirements(val);
+
+        reqLength.classList.toggle('valid', checks.minLength);
+        reqUpper.classList.toggle('valid', checks.hasUpper);
+        reqLower.classList.toggle('valid', checks.hasLower);
+        reqNumber.classList.toggle('valid', checks.hasNumber);
+        reqSpecial.classList.toggle('valid', checks.hasSpecial);
+      });
+
+      // Validation Helpers
+      function setFieldError(fieldId, errorMsg) {
+        const input = document.getElementById(fieldId);
+        const errorEl = document.getElementById(fieldId + 'Error');
+        if (input) input.classList.add('has-error');
+        if (errorEl) {
+          errorEl.textContent = errorMsg;
+          errorEl.classList.add('visible');
+        }
+      }
+
+      function clearFieldError(fieldId) {
+        const input = document.getElementById(fieldId);
+        const errorEl = document.getElementById(fieldId + 'Error');
+        if (input) input.classList.remove('has-error');
+        if (errorEl) {
+          errorEl.textContent = '';
+          errorEl.classList.remove('visible');
+        }
+      }
+
+      function clearAllErrors() {
+        document.querySelectorAll('.form-input').forEach(i => i.classList.remove('has-error'));
+        document.querySelectorAll('.field-error-msg').forEach(e => {
+          e.textContent = '';
+          e.classList.remove('visible');
+        });
+      }
+
+      // Attach clear on input
+      ['loginEmail', 'loginPassword', 'signupName', 'signupEmail', 'signupPassword', 'signupConfirmPassword', 'forgotEmail'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', () => {
+            clearFieldError(id);
+            hideAlert();
+          });
+        }
+      });
+
+      // ------------------------------------------------------------------------
+      // LOGIN SUBMISSION HANDLER
+      // ------------------------------------------------------------------------
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+        clearAllErrors();
+
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const remember = document.getElementById('loginRemember').checked;
+        const btn = document.getElementById('btnLoginSubmit');
+
+        let hasError = false;
+        if (!email) {
+          setFieldError('loginEmail', 'Please enter your email or username.');
+          hasError = true;
+        }
+        if (!password) {
+          setFieldError('loginPassword', 'Please enter your password.');
+          hasError = true;
+        }
+
+        if (hasError) return;
+
+        btn.classList.add('loading');
+        btn.disabled = true;
+
+        try {
+          const result = await VeloopAuth.login(email, password, remember);
+
+          if (result.success) {
+            showAlert('success', 'Authentication successful! Redirecting to Mining Station...');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 600);
+          } else {
+            showAlert('error', result.error || 'Invalid email or password.');
+            setFieldError('loginPassword', 'Invalid credentials provided.');
+          }
+        } catch (err) {
+          showAlert('error', 'Unable to connect to authentication service. Please try again.');
+        } finally {
+          btn.classList.remove('loading');
+          btn.disabled = false;
+        }
+      });
+
+      // ------------------------------------------------------------------------
+      // SIGN-UP SUBMISSION HANDLER
+      // ------------------------------------------------------------------------
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+        clearAllErrors();
+
+        const name = document.getElementById('signupName').value.trim();
+        const email = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('signupConfirmPassword').value;
+        const terms = document.getElementById('signupTerms').checked;
+        const btn = document.getElementById('btnSignupSubmit');
+
+        let hasError = false;
+
+        if (!name || name.length < 2) {
+          setFieldError('signupName', 'Please provide your name (at least 2 characters).');
+          hasError = true;
+        }
+
+        if (!email) {
+          setFieldError('signupEmail', 'Please provide an email address.');
+          hasError = true;
+        } else if (!VeloopAuth.isValidEmail(email)) {
+          setFieldError('signupEmail', 'Please enter a valid email address (e.g. name@domain.com).');
+          hasError = true;
+        }
+
+        const checks = VeloopAuth.checkPasswordRequirements(password);
+        if (!checks.isValid) {
+          setFieldError('signupPassword', 'Password does not meet the security requirements below.');
+          hasError = true;
+        }
+
+        if (password !== confirmPassword) {
+          setFieldError('signupConfirmPassword', 'Passwords do not match.');
+          hasError = true;
+        }
+
+        if (!terms) {
+          const termsError = document.getElementById('signupTermsError');
+          termsError.textContent = 'You must agree to the Terms & Privacy Policy.';
+          termsError.classList.add('visible');
+          hasError = true;
+        }
+
+        if (hasError) return;
+
+        btn.classList.add('loading');
+        btn.disabled = true;
+
+        try {
+          const result = await VeloopAuth.signup(name, email, password, confirmPassword);
+
+          if (result.success) {
+            showAlert('success', 'Account created successfully! Redirecting to Mining Station...');
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 700);
+          } else {
+            showAlert('error', result.error || 'Failed to create account.');
+            if (result.error && result.error.toLowerCase().includes('email')) {
+              setFieldError('signupEmail', result.error);
+            }
+          }
+        } catch (err) {
+          showAlert('error', 'Unable to reach the server. Please try again.');
+        } finally {
+          btn.classList.remove('loading');
+          btn.disabled = false;
+        }
+      });
+
+      // ------------------------------------------------------------------------
+      // FORGOT PASSWORD SUBMISSION HANDLER
+      // ------------------------------------------------------------------------
+      forgotForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+        clearAllErrors();
+
+        const email = document.getElementById('forgotEmail').value.trim();
+        const btn = document.getElementById('btnForgotSubmit');
+
+        if (!email) {
+          setFieldError('forgotEmail', 'Please enter your account email.');
+          return;
+        }
+        if (!VeloopAuth.isValidEmail(email)) {
+          setFieldError('forgotEmail', 'Please enter a valid email address.');
+          return;
+        }
+
+        btn.classList.add('loading');
+        btn.disabled = true;
+
+        try {
+          const result = await VeloopAuth.forgotPassword(email);
+          showAlert('success', result.message || 'If an account exists with this email, recovery instructions have been sent.');
+          document.getElementById('forgotEmail').value = '';
+        } catch (err) {
+          showAlert('error', 'Unable to send recovery request. Please try again.');
+        } finally {
+          btn.classList.remove('loading');
+          btn.disabled = false;
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>

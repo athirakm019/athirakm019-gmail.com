@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+  <defs>
+    <!-- Master Sovereign Gold & Platinum Gradients -->
+    <linearGradient id="mst-gold-outer" x1="15" y1="10" x2="185" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="20%" stop-color="#fde047"/>
+      <stop offset="40%" stop-color="#eab308"/>
+      <stop offset="65%" stop-color="#ca8a04"/>
+      <stop offset="85%" stop-color="#854d0e"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+    <linearGradient id="mst-plat-mid" x1="25" y1="25" x2="175" y2="175" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="mst-core" x1="100" y1="40" x2="100" y2="165" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e112a"/>
+      <stop offset="50%" stop-color="#120a1c"/>
+      <stop offset="100%" stop-color="#08040d"/>
+    </linearGradient>
+    <linearGradient id="mst-ve" x1="60" y1="65" x2="140" y2="145" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#fef08a"/>
+      <stop offset="55%" stop-color="#f59e0b"/>
+      <stop offset="85%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="mst-crown" x1="70" y1="10" x2="130" y2="45" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#fef08a"/>
+      <stop offset="60%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <linearGradient id="mst-sheen" x1="40" y1="20" x2="160" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="20%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="mst-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#854d0e" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#mst-glow)">
+    <!-- Radial Starburst Background Rays -->
+    <path d="M100 8 L103 26 M100 192 L97 174 M8 100 L26 103 M192 100 L174 97 M35 35 L48 48 M165 165 L152 152 M165 35 L152 48 M35 165 L48 152" 
+          stroke="#eab308" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+
+    <!-- Layer 1: Imperial Sovereign Shield Outer Gilded Armor -->
+    <path d="M100 16 L158 34 L180 72 L172 132 L144 168 L100 188 L56 168 L28 132 L20 72 L42 34 Z" 
+          fill="url(#mst-gold-outer)" stroke="#fffbeb" stroke-width="2"/>
+
+    <!-- Layer 2: Platinum Interlocking Shield Plate -->
+    <path d="M100 26 L150 42 L168 76 L160 126 L136 156 L100 174 L64 156 L40 126 L32 76 L50 42 Z" 
+          fill="url(#mst-plat-mid)" stroke="#e2e8f0" stroke-width="1.5"/>
+
+    <!-- Layer 3: Velvet Midnight Royal Core Field -->
+    <path d="M100 36 L142 50 L156 80 L148 120 L128 146 L100 160 L72 146 L52 120 L44 80 L58 50 Z" 
+          fill="url(#mst-core)" stroke="#eab308" stroke-width="1.5"/>
+
+    <!-- Light Sheen Arc -->
+    <path d="M100 36 L142 50 L156 80 L100 100 L44 80 L58 50 Z" 
+          fill="url(#mst-sheen)"/>
+
+    <!-- Grand Imperial Master Crown -->
+    <path d="M72 36 L78 20 L86 28 L100 12 L114 28 L122 20 L128 36 H72 Z" 
+          fill="url(#mst-crown)" stroke="#ffffff" stroke-width="1"/>
+    <!-- Crown Jewels Inset -->
+    <circle cx="100" cy="14" r="3" fill="#ffffff" stroke="#eab308" stroke-width="1"/>
+    <circle cx="86" cy="30" r="2.5" fill="#e11d48"/>
+    <circle cx="114" cy="30" r="2.5" fill="#2563eb"/>
+    <circle cx="78" cy="22" r="2" fill="#10b981"/>
+    <circle cx="122" cy="22" r="2" fill="#10b981"/>
+
+    <!-- Flanking Cardinal Gemstones -->
+    <!-- Left Ruby Inset -->
+    <g transform="translate(36, 96)">
+      <polygon points="0,-8 7,0 0,8 -7,0" fill="#e11d48" stroke="#fde047" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#ffffff"/>
+    </g>
+    <!-- Right Sapphire Inset -->
+    <g transform="translate(164, 96)">
+      <polygon points="0,-8 7,0 0,8 -7,0" fill="#2563eb" stroke="#fde047" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#ffffff"/>
+    </g>
+
+    <!-- Master Central VE Sovereign Monogram with Multi-Bevel Gold -->
+    <path d="M68 76 L100 134 L132 76 H116 L100 106 L84 76 H68 Z" 
+          fill="url(#mst-ve)" stroke="#451a03" stroke-width="1.75"/>
+    <path d="M86 92 H114 M89 102 H111" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M95 97 H105" stroke="#fde047" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Dual Master Heraldic Star Accents -->
+    <polygon points="100,52 102,57 107,57 103,60 105,65 100,62 95,65 97,60 93,57 98,57" fill="#ffffff"/>
+    <polygon points="100,146 102,150 106,150 103,153 104,157 100,154 96,157 97,153 94,150 98,150" fill="#fde047"/>
+
+    <!-- Sovereign Gold Bottom Chevron Filigree -->
+    <path d="M70 152 L100 166 L130 152" stroke="#fffbeb" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

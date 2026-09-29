@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" width="100%" height="100%">
+  <defs>
+    <!-- Mythic Apex Legend Gradients -->
+    <linearGradient id="lgd-halo" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="25%" stop-color="#fde047"/>
+      <stop offset="50%" stop-color="#60a5fa"/>
+      <stop offset="75%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="lgd-gold-frame" x1="10" y1="10" x2="190" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="15%" stop-color="#fffbeb"/>
+      <stop offset="35%" stop-color="#fde047"/>
+      <stop offset="55%" stop-color="#eab308"/>
+      <stop offset="75%" stop-color="#ca8a04"/>
+      <stop offset="90%" stop-color="#854d0e"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+    <linearGradient id="lgd-plat-wings" x1="100" y1="20" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="30%" stop-color="#e2e8f0"/>
+      <stop offset="60%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="lgd-core-dark" x1="100" y1="40" x2="100" y2="165" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="35%" stop-color="#0f172a"/>
+      <stop offset="70%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="lgd-ve-monogram" x1="50" y1="50" x2="150" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="20%" stop-color="#fffbeb"/>
+      <stop offset="45%" stop-color="#fde047"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="90%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="lgd-crown" x1="70" y1="5" x2="130" y2="45" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#fffbeb"/>
+      <stop offset="50%" stop-color="#fde047"/>
+      <stop offset="75%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <linearGradient id="lgd-sheen" x1="30" y1="10" x2="170" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
+      <stop offset="20%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="lgd-glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#f59e0b" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#lgd-glow)">
+    <!-- Outer Celestial Sunburst Nova Rays -->
+    <path d="M100 4 L100 18 M100 182 L100 196 M4 100 L18 100 M182 100 L196 100 M32 32 L42 42 M158 158 L168 168 M168 32 L158 42 M32 168 L42 158 M60 12 L65 24 M140 12 L135 24 M60 188 L65 176 M140 188 L135 176" 
+          stroke="#fde047" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- Outer Celestial Halo Ring -->
+    <circle cx="100" cy="100" r="92" stroke="url(#lgd-halo)" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.65"/>
+
+    <!-- Grand Mythic Dragon / Phoenix Platinum Wing Armour -->
+    <path d="M100 14 L146 18 L180 44 L192 90 L180 144 L152 176 L100 192 L48 176 L20 144 L8 90 L20 44 L54 18 Z" 
+          fill="url(#lgd-plat-wings)" stroke="#ffffff" stroke-width="1.5"/>
+
+    <!-- Layer 2: Master Chiseled 24K Sovereign Gold Armor Plate -->
+    <path d="M100 20 L140 24 L170 48 L178 92 L168 138 L142 166 L100 182 L58 166 L32 138 L22 92 L30 48 L60 24 Z" 
+          fill="url(#lgd-gold-frame)" stroke="#fffbeb" stroke-width="2"/>
+
+    <!-- Layer 3: Velvet Deep Space Singularity Well -->
+    <path d="M100 32 L134 38 L158 60 L162 96 L152 132 L130 154 L100 168 L70 154 L48 132 L38 96 L42 60 L66 38 Z" 
+          fill="url(#lgd-core-dark)" stroke="#eab308" stroke-width="2"/>
+
+    <!-- Specular Light Sheen Overlay -->
+    <path d="M100 32 L134 38 L158 60 L162 96 L100 106 L42 60 L66 38 Z" 
+          fill="url(#lgd-sheen)"/>
+
+    <!-- Grand Sovereign Apex Imperial Crown -->
+    <path d="M68 34 L74 14 L84 24 L100 6 L116 24 L126 14 L132 34 H68 Z" 
+          fill="url(#lgd-crown)" stroke="#ffffff" stroke-width="1.25"/>
+
+    <!-- Crown Diamonds & Insets -->
+    <!-- Apex Diamond -->
+    <polygon points="100,2 104,8 100,14 96,8" fill="#ffffff" stroke="#38bdf8" stroke-width="0.75"/>
+    <circle cx="100" cy="8" r="1.5" fill="#bae6fd"/>
+    <!-- Left Crown Spire Jewels -->
+    <circle cx="74" cy="16" r="2.5" fill="#fde047"/>
+    <circle cx="84" cy="26" r="2.5" fill="#e11d48"/>
+    <!-- Right Crown Spire Jewels -->
+    <circle cx="126" cy="16" r="2.5" fill="#fde047"/>
+    <circle cx="116" cy="26" r="2.5" fill="#2563eb"/>
+
+    <!-- THE FOUR CARDINAL INSET GEMSTONES -->
+    <!-- 1. North Star / Diamond (Beneath Crown) -->
+    <polygon points="100,40 106,46 100,52 94,46" fill="#ffffff" stroke="#38bdf8" stroke-width="1"/>
+    <circle cx="100" cy="46" r="1.5" fill="#38bdf8"/>
+
+    <!-- 2. East Cardinal Sapphire Gemstone -->
+    <g transform="translate(162, 94)">
+      <polygon points="0,-9 8,0 0,9 -8,0" fill="#2563eb" stroke="#ffffff" stroke-width="1.25"/>
+      <circle cx="0" cy="0" r="2" fill="#93c5fd"/>
+    </g>
+
+    <!-- 3. West Cardinal Ruby Gemstone -->
+    <g transform="translate(38, 94)">
+      <polygon points="0,-9 8,0 0,9 -8,0" fill="#e11d48" stroke="#ffffff" stroke-width="1.25"/>
+      <circle cx="0" cy="0" r="2" fill="#fda4af"/>
+    </g>
+
+    <!-- 4. South Cardinal Emerald Gemstone -->
+    <g transform="translate(100, 166)">
+      <polygon points="0,-8 7,0 0,8 -7,0" fill="#10b981" stroke="#fde047" stroke-width="1.25"/>
+      <circle cx="0" cy="0" r="2" fill="#34d399"/>
+    </g>
+
+    <!-- Central Singularity Orbit Rings -->
+    <ellipse cx="100" cy="104" rx="46" ry="18" stroke="#fde047" stroke-width="1" stroke-dasharray="4 3" opacity="0.6" transform="rotate(-15 100 104)"/>
+    <ellipse cx="100" cy="104" rx="46" ry="18" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 3" opacity="0.6" transform="rotate(15 100 104)"/>
+
+    <!-- Mythic VE Apex Emblem: Multi-layered, Radiant 3D Monogram -->
+    <path d="M66 74 L100 136 L134 74 H116 L100 106 L84 74 H66 Z" 
+          fill="url(#lgd-ve-monogram)" stroke="#451a03" stroke-width="2"/>
+    <path d="M84 92 H116 M87 103 H113" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M93 98 H107" stroke="#fde047" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Central Radiant Singularity Star -->
+    <polygon points="100,60 102,66 108,66 103,70 105,76 100,72 95,76 97,70 92,66 98,66" 
+             fill="#ffffff" stroke="#fde047" stroke-width="0.75"/>
+    <circle cx="100" cy="67" r="1.5" fill="#fde047"/>
+
+    <!-- Bottom Sovereign Crest Finial -->
+    <circle cx="84" cy="154" r="2" fill="#fde047"/>
+    <circle cx="116" cy="154" r="2" fill="#fde047"/>
+  </g>
+</svg>
