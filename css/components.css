@@ -122,20 +122,84 @@
   background: transparent !important;
 }
 
+.modal-badge-tier-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-gold, #F2A900);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
 .modal-badge-title {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: 700;
+  font-weight: 800;
   color: #ffffff;
   margin-bottom: var(--space-2);
+}
+
+.modal-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid #10b981;
+  color: #34d399;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: var(--radius-full, 9999px);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
 }
 
 .modal-badge-subtitle {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  margin-bottom: var(--space-6);
+  margin-bottom: 4px;
   max-width: 360px;
   line-height: 1.5;
+}
+
+.modal-reward-highlight {
+  font-family: var(--font-display, 'Inter', sans-serif);
+  font-size: 24px;
+  font-weight: 800;
+  color: #F2A900;
+  text-shadow: 0 0 20px rgba(242, 169, 0, 0.5);
+  margin: 4px 0 16px;
+  letter-spacing: -0.01em;
+}
+
+.modal-continue-btn {
+  background: linear-gradient(135deg, #F2A900 0%, #d97706 100%) !important;
+  color: #0f172a !important;
+  border: none !important;
+  box-shadow: 0 0 24px rgba(242, 169, 0, 0.45) !important;
+  transition: all 200ms ease;
+  cursor: pointer;
+}
+
+.modal-continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(242, 169, 0, 0.7) !important;
+}
+
+.modal-secondary-btn {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: var(--text-secondary, #9AA4B8) !important;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.modal-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
 }
 
 .modal-reward-pills {
@@ -143,7 +207,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   flex-wrap: wrap;
 }
 

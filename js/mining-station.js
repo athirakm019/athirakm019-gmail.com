@@ -142,6 +142,7 @@ export class MiningStation {
     this.state = state;
     const card = document.getElementById('miningBannerCard');
     const ctaBtn = document.getElementById('primaryMiningCta');
+    const statusBadge = document.getElementById('miningStatusBadge');
     const statusText = document.getElementById('miningStatusText');
     const progressText = document.getElementById('miningProgressText');
     const progressFill = document.getElementById('miningProgressFill');
@@ -149,7 +150,10 @@ export class MiningStation {
     const ringIcon = document.getElementById('ringMiniIcon');
     const timeText = document.getElementById('miningTimeText');
     const rewardText = document.getElementById('miningRewardText');
+    const rateText = document.getElementById('miningRateText');
+    const fluxText = document.getElementById('miningFluxText');
     const subtext = document.getElementById('miningSubtext');
+    const nextBadgeProgress = document.getElementById('miningNextBadgeProgress');
 
     if (card) card.setAttribute('data-state', state);
 
@@ -157,28 +161,69 @@ export class MiningStation {
     clearInterval(this.timerInterval);
     clearInterval(this.veInterval);
 
-    if (state === 'default') {
-      if (statusText) statusText.textContent = 'Standby — Ready';
+    // Update Stage Journey Breadcrumb
+    const updateJourney = (activeStageNum) => {
+      const stageSteps = document.querySelectorAll('#miningStageJourney .stage-step');
+      if (stageSteps && stageSteps.length > 0) {
+        stageSteps.forEach((stepEl, idx) => {
+          const stepNum = idx + 1;
+          const dot = stepEl.querySelector('.stage-step-dot');
+          stepEl.classList.remove('completed', 'active', 'upcoming', 'active-unlock');
+          if (activeStageNum >= 6) {
+            if (stepNum < 6) {
+              stepEl.classList.add('completed');
+              if (dot) dot.textContent = '✓';
+            } else {
+              stepEl.classList.add('active', 'active-unlock');
+              if (dot) dot.textContent = '✓';
+            }
+          } else {
+            if (stepNum < activeStageNum) {
+              stepEl.classList.add('completed');
+              if (dot) dot.textContent = '✓';
+            } else if (stepNum === activeStageNum) {
+              stepEl.classList.add('active');
+              if (dot) dot.textContent = String(stepNum);
+            } else {
+              stepEl.classList.add('upcoming');
+              if (dot) dot.textContent = String(stepNum);
+            }
+          }
+        });
+      }
+    };
+
+    if (state === 'default' || state === 'idle') {
+      if (statusBadge) statusBadge.setAttribute('data-status', 'idle');
+      if (statusText) statusText.textContent = '● READY TO MINE';
       if (progressText) progressText.textContent = '0%';
       if (progressFill) progressFill.style.width = '0%';
       if (ringFill) ringFill.style.strokeDashoffset = '113.1';
-      if (ringIcon) ringIcon.textContent = '○';
+      if (ringIcon) ringIcon.textContent = '⚡';
       if (timeText) timeText.textContent = '60:00 standby';
       if (rewardText) rewardText.textContent = '+0 VEs';
-      if (subtext) subtext.textContent = 'Activate your mining session and start earning VEs.';
+      if (rateText) rateText.textContent = 'Rate: +1.2 VE/min • Standby';
+      if (fluxText) fluxText.textContent = 'Node Flux: 98.4 GH/s';
+      if (subtext) subtext.textContent = 'Activate your mining session and earn VEs while progressing toward your next achievement.';
+      if (nextBadgeProgress) nextBadgeProgress.textContent = 'Progress: 0% towards unlock';
       if (ctaBtn) {
         ctaBtn.className = 'btn-mining-cta';
-        ctaBtn.innerHTML = `Start Mining <span class="cta-arrow">→</span>`;
+        ctaBtn.disabled = false;
+        ctaBtn.innerHTML = `MINE NOW <span class="cta-arrow">⚡</span>`;
       }
+      updateJourney(1);
     } else if (state === 'hover') {
-      if (statusText) statusText.textContent = 'Engaging Core...';
+      if (statusBadge) statusBadge.setAttribute('data-status', 'hover');
+      if (statusText) statusText.textContent = '● READY TO MINE';
       if (progressText) progressText.textContent = '0%';
       if (progressFill) progressFill.style.width = '5%';
       if (ringFill) ringFill.style.strokeDashoffset = '107.4';
       if (ringIcon) ringIcon.textContent = '⚡';
-      if (subtext) subtext.textContent = 'Click to spin up quantum reactor coils.';
+      if (subtext) subtext.textContent = 'Click MINE NOW to spin up quantum reactor coils and start stream.';
+      updateJourney(1);
     } else if (state === 'active') {
-      if (statusText) statusText.textContent = 'Active Mining Session';
+      if (statusBadge) statusBadge.setAttribute('data-status', 'active');
+      if (statusText) statusText.textContent = '● MINING ACTIVE';
       if (subtext) subtext.textContent = 'Quantum extraction active. Rewards streaming to secure wallet.';
       if (progressText) progressText.textContent = '75%';
       if (progressFill) progressFill.style.width = '75%';
@@ -186,15 +231,18 @@ export class MiningStation {
       if (ringIcon) ringIcon.textContent = '⚡';
       if (timeText) timeText.textContent = '45:20 remaining';
       if (rewardText) rewardText.textContent = '+38 VEs';
+      if (rateText) rateText.textContent = 'Rate: +1.2 VE/min • Burst in 0:08s';
+      if (fluxText) fluxText.textContent = 'Node Flux: 98.4 GH/s';
+      if (nextBadgeProgress) nextBadgeProgress.textContent = 'Progress: 75% towards unlock';
       if (ctaBtn) {
         ctaBtn.className = 'btn-mining-cta active-mining';
-        ctaBtn.innerHTML = `Mining in Progress... <span class="cta-arrow">⚡</span>`;
+        ctaBtn.innerHTML = `MINING IN PROGRESS... <span class="cta-arrow">⚡</span>`;
       }
-
-      // Start Countdown and Live Counter
+      updateJourney(4);
       this.startLiveSimulation();
     } else if (state === 'completed') {
-      if (statusText) statusText.textContent = 'Session Complete';
+      if (statusBadge) statusBadge.setAttribute('data-status', 'completed');
+      if (statusText) statusText.textContent = '● REWARD EARNED';
       if (subtext) subtext.textContent = 'Full extraction quota achieved! Claim your earned VEs now.';
       if (progressText) progressText.textContent = '100%';
       if (progressFill) progressFill.style.width = '100%';
@@ -202,10 +250,29 @@ export class MiningStation {
       if (ringIcon) ringIcon.textContent = '✓';
       if (timeText) timeText.textContent = 'Completed (00:00)';
       if (rewardText) rewardText.textContent = '+50 VEs';
+      if (rateText) rateText.textContent = 'Quota Reached: +50 VEs Earned';
+      if (nextBadgeProgress) nextBadgeProgress.textContent = 'Milestone Reached! (100%)';
       if (ctaBtn) {
         ctaBtn.className = 'btn-mining-cta claim-rewards';
-        ctaBtn.innerHTML = `Claim 50 VEs & Continue <span class="cta-arrow">✓</span>`;
+        ctaBtn.innerHTML = `CLAIM 50 VEs & CONTINUE <span class="cta-arrow">✓</span>`;
       }
+      updateJourney(6);
+    } else if (state === 'unlocked') {
+      if (statusBadge) statusBadge.setAttribute('data-status', 'unlocked');
+      if (statusText) statusText.textContent = '● ACHIEVEMENT UNLOCKED';
+      if (subtext) subtext.textContent = 'Level 02 Silver badge unlocked! Check your badge collection.';
+      if (progressText) progressText.textContent = '100%';
+      if (progressFill) progressFill.style.width = '100%';
+      if (ringFill) ringFill.style.strokeDashoffset = '0';
+      if (ringIcon) ringIcon.textContent = '★';
+      if (timeText) timeText.textContent = 'Milestone Unlocked!';
+      if (rewardText) rewardText.textContent = '+50 VEs';
+      if (nextBadgeProgress) nextBadgeProgress.textContent = 'Badge Unlocked! ✓';
+      if (ctaBtn) {
+        ctaBtn.className = 'btn-mining-cta claim-rewards';
+        ctaBtn.innerHTML = `CONTINUE MINING <span class="cta-arrow">⚡</span>`;
+      }
+      updateJourney(6);
     }
 
     // Sync State Switcher Bar Buttons

@@ -111,35 +111,55 @@ export class InteractionsEngine {
     const closeBtn = document.getElementById('modalCloseBtn');
     const continueBtn = document.getElementById('modalContinueBtn');
 
-    if (closeBtn) closeBtn.addEventListener('click', () => this.closeModal());
+    if (closeBtn) closeBtn.addEventListener('click', () => {
+      this.closeModal();
+      if (window.miningStateManager) {
+        window.miningStateManager.claimRewardAndAdvance();
+      }
+    });
     if (continueBtn) {
       continueBtn.addEventListener('click', () => {
         this.closeModal();
-        // Route to achievements tab smoothly
-        const tabBtn = document.querySelector('[data-tab="achievements"]');
+        if (window.miningStateManager) {
+          window.miningStateManager.claimRewardAndAdvance();
+        }
+        const tabBtn = document.querySelector('[data-tab="mining-banner"]');
         if (tabBtn) tabBtn.click();
+        const target = document.getElementById('miningBannerCard');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
     }
 
     // Close on background click
     if (this.modalElem) {
       this.modalElem.addEventListener('click', (e) => {
-        if (e.target === this.modalElem) this.closeModal();
+        if (e.target === this.modalElem) {
+          this.closeModal();
+          if (window.miningStateManager) {
+            window.miningStateManager.claimRewardAndAdvance();
+          }
+        }
       });
     }
   }
 
-  openModal(badgeId = 'badge-03') {
-    const badge = getBadgeById(badgeId) || BADGE_DATA[2]; // Default Gold - Reward Hunter
+  openModal(badgeId = 'badge-01') {
+    const badge = getBadgeById(badgeId) || BADGE_DATA[0];
     if (!this.modalElem) return;
 
     const modalTitle = document.getElementById('modalBadgeTitle');
+    const modalLevelTier = document.getElementById('modalBadgeLevelTier');
+    const modalStatusPill = document.getElementById('modalStatusPill');
     const modalSubtitle = document.getElementById('modalBadgeSubtitle');
+    const modalRewardHighlight = document.getElementById('modalRewardHighlight');
     const modalImage = document.getElementById('modalBadgeImage');
     const modalPills = document.getElementById('modalRewardPills');
 
-    if (modalTitle) modalTitle.textContent = `${badge.tier} — ${badge.name}`;
-    if (modalSubtitle) modalSubtitle.textContent = `Congratulations! You've unlocked Level 0${badge.level}. ${badge.description}`;
+    if (modalLevelTier) modalLevelTier.textContent = `${badge.levelDisplay.toUpperCase()} • ${badge.tier.toUpperCase()}`;
+    if (modalTitle) modalTitle.textContent = badge.name;
+    if (modalStatusPill) modalStatusPill.textContent = '✓ UNLOCKED';
+    if (modalSubtitle) modalSubtitle.textContent = 'Mining milestone completed.';
+    if (modalRewardHighlight) modalRewardHighlight.textContent = '+38 VEs earned';
     if (modalImage) modalImage.src = badge.assetPath;
 
     if (modalPills && badge.perks) {
@@ -162,6 +182,9 @@ export class InteractionsEngine {
     if (!this.modalElem) return;
     this.modalElem.classList.remove('active');
     this.stopConfetti();
+    if (window.miningStateManager) {
+      window.miningStateManager.dismissNewlyUnlocked();
+    }
   }
 
   setupLockedModal() {

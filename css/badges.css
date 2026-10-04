@@ -122,6 +122,44 @@
   background: rgba(245, 158, 11, 0.1);
 }
 
+/* Newly Unlocked State */
+.badge-card.newly_unlocked {
+  border-color: var(--gold-primary, #F2A900);
+  background: linear-gradient(145deg, rgba(32, 38, 58, 0.95), rgba(42, 48, 66, 0.9));
+  box-shadow: 0 0 24px rgba(242, 169, 0, 0.35), 0 16px 36px -6px rgba(0, 0, 0, 0.7);
+  animation: badgeNewlyUnlockedGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes badgeNewlyUnlockedGlow {
+  0% {
+    box-shadow: 0 0 16px rgba(242, 169, 0, 0.25), 0 16px 36px -6px rgba(0, 0, 0, 0.7);
+    border-color: rgba(242, 169, 0, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(242, 169, 0, 0.5), 0 20px 40px -6px rgba(0, 0, 0, 0.85);
+    border-color: #F2A900;
+  }
+}
+
+.badge-card.newly_unlocked .badge-svg {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 20px rgba(242, 169, 0, 0.45));
+}
+
+.badge-card.newly_unlocked .badge-card-status {
+  background: rgba(242, 169, 0, 0.2);
+  border: 1px solid var(--gold-primary, #F2A900);
+  color: var(--gold-primary, #F2A900);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.badge-card.newly_unlocked .badge-level-pill {
+  color: #fff;
+  border-color: var(--gold-primary, #F2A900);
+  background: rgba(242, 169, 0, 0.25);
+  font-weight: 800;
+}
+
 /* Locked State */
 .badge-card.locked {
   background: rgba(22, 24, 39, 0.55);

@@ -459,20 +459,22 @@
 
       <!-- State Switcher Control Toolbar -->
       <div class="state-switcher-bar">
-        <div style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
           <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); text-transform:uppercase;">
             Switch Component State:
           </span>
           <div class="state-switcher-group">
-            <button class="state-btn" data-mining-state="default">1. Default (0%)</button>
+            <button class="state-btn" data-mining-state="default">1. Idle (Ready to Mine)</button>
             <button class="state-btn" data-mining-state="hover">2. Hover Glow</button>
             <button class="state-btn active" data-mining-state="active">3. Active (75%)</button>
             <button class="state-btn" data-mining-state="completed">4. Completed (100%)</button>
+            <button class="state-btn" data-mining-state="unlocked">5. Achievement Unlocked</button>
+            <button class="state-btn" id="resetProgressionBtn" title="Reset all achievements and start fresh from Level 01 Bronze" style="color:var(--text-secondary); border-style:dashed;">↺ Reset to Lvl 1</button>
           </div>
         </div>
         <div class="session-badge-mini">
           <span class="status-dot"></span>
-          <span>Live Reactor Telemetry</span>
+          <span>Live Station Telemetry</span>
         </div>
       </div>
 
@@ -488,22 +490,63 @@
         <div class="mining-banner-content">
           <!-- LEFT COLUMN: Content, Telemetry & CTA -->
           <div class="mining-col-left">
-            <div class="mining-status-badge">
-              <span class="status-dot"></span>
-              <span id="miningStatusText">● MINING ACTIVE</span>
+            <!-- Eyebrow & Status Row -->
+            <div class="mining-eyebrow-row">
+              <div class="mining-station-eyebrow">
+                <span>⚡</span> MINING STATION
+              </div>
+              <div class="mining-status-badge" id="miningStatusBadge" data-status="active">
+                <span class="status-dot"></span>
+                <span id="miningStatusText">● MINING ACTIVE</span>
+              </div>
             </div>
 
+            <!-- Main Heading: START MINING. START EARNING. -->
             <h2 class="mining-heading">
-              Start Mining <span class="gradient-word">Start Earning</span>
+              <span class="heading-line">START MINING.</span>
+              <span class="heading-line accent-gold">START EARNING.</span>
             </h2>
 
             <p id="miningSubtext" class="mining-subtext">
-              Activate your session to earn VEs while staying engaged.
+              Activate your mining session and earn VEs while progressing toward your next achievement.
             </p>
+
+            <!-- 6-Stage Mining Journey Indicator -->
+            <div class="mining-stage-journey" id="miningStageJourney" aria-label="Mining Stage Progression">
+              <div class="stage-step completed" data-stage-index="1">
+                <div class="stage-step-dot">✓</div>
+                <span class="stage-step-label">Start</span>
+              </div>
+              <span class="stage-step-arrow">→</span>
+              <div class="stage-step completed" data-stage-index="2">
+                <div class="stage-step-dot">✓</div>
+                <span class="stage-step-label">Mine</span>
+              </div>
+              <span class="stage-step-arrow">→</span>
+              <div class="stage-step completed" data-stage-index="3">
+                <div class="stage-step-dot">✓</div>
+                <span class="stage-step-label">Earn</span>
+              </div>
+              <span class="stage-step-arrow">→</span>
+              <div class="stage-step active" data-stage-index="4">
+                <div class="stage-step-dot">4</div>
+                <span class="stage-step-label">Progress</span>
+              </div>
+              <span class="stage-step-arrow">→</span>
+              <div class="stage-step upcoming" data-stage-index="5">
+                <div class="stage-step-dot">5</div>
+                <span class="stage-step-label">Achieve</span>
+              </div>
+              <span class="stage-step-arrow">→</span>
+              <div class="stage-step upcoming" data-stage-index="6">
+                <div class="stage-step-dot">6</div>
+                <span class="stage-step-label">Unlock</span>
+              </div>
+            </div>
 
             <!-- Dual Telemetry Tiles -->
             <div class="mining-telemetry-grid">
-              <!-- Tile A: Mining Progress (Visual Progress Bar + Circular Progress Ring) -->
+              <!-- Tile A: Mining Progress -->
               <div class="telemetry-tile">
                 <div class="telemetry-label-row">
                   <span>Mining Progress</span>
@@ -511,7 +554,7 @@
                 </div>
                 <div class="telemetry-val-row" style="align-items: center; margin: 4px 0;">
                   <div style="display: flex; align-items: center; gap: 12px;">
-                    <!-- Circular Progress Ring (Prompt: 'Create a visual progress bar/ring') -->
+                    <!-- Circular Progress Ring -->
                     <div class="progress-ring-container" style="position: relative; width: 44px; height: 44px; flex-shrink: 0;">
                       <svg width="44" height="44" viewBox="0 0 44 44" style="transform: rotate(-90deg);">
                         <circle cx="22" cy="22" r="18" stroke="rgba(255,255,255,0.08)" stroke-width="4" fill="none" />
@@ -529,7 +572,7 @@
                     </div>
                     <div>
                       <div id="miningProgressText" class="telemetry-val-primary">75%</div>
-                      <div class="telemetry-val-sub">Node Flux: 98.4 GH/s</div>
+                      <div class="telemetry-val-sub" id="miningFluxText">Node Flux: 98.4 GH/s</div>
                     </div>
                   </div>
                 </div>
@@ -541,15 +584,15 @@
               <!-- Tile B: Reward Counter -->
               <div class="telemetry-tile">
                 <div class="telemetry-label-row">
-                  <span>VE Reward Indicator</span>
+                  <span>Current Reward</span>
                   <span style="color:var(--text-gold);">VE Yield</span>
                 </div>
                 <div class="telemetry-val-row">
                   <span id="miningRewardText" class="telemetry-val-primary gold">+38 VEs</span>
-                  <span class="telemetry-val-sub">Auto-credited</span>
+                  <span class="telemetry-val-sub" style="color:var(--gem-emerald-light);">Auto-credited</span>
                 </div>
-                <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:6px;">
-                  Next burst in 0:08s
+                <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); margin-top:6px;" id="miningRateText">
+                  Rate: +1.2 VE/min • Burst in 0:08s
                 </div>
               </div>
             </div>
@@ -564,7 +607,21 @@
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
-                <span>Cycle: 60 Mins</span>
+                <span id="miningCycleText">Cycle: 60 Mins</span>
+              </div>
+            </div>
+
+            <!-- Next Achievement Motivation Preview Card -->
+            <div class="mining-next-achievement-card" id="miningNextAchievementCard" title="Upcoming Achievement Milestone">
+              <div class="next-badge-icon-box">
+                <img id="miningNextBadgeImg" src="assets/badges/01-bronze-first-step.svg" alt="Next Target Badge" />
+              </div>
+              <div class="next-badge-meta">
+                <div class="next-badge-eyebrow">NEXT ACHIEVEMENT</div>
+                <div class="next-badge-title" id="miningNextBadgeTitle">Level 01 Bronze • First Step</div>
+              </div>
+              <div class="next-badge-progress-tag" id="miningNextBadgeProgress">
+                Target: Level 01 • 0%
               </div>
             </div>
           </div>
@@ -813,12 +870,37 @@
 
             <div class="mining-banner-content">
               <div class="mining-col-left">
-                <div class="mining-status-badge">
-                  <span class="status-dot"></span>
-                  <span>● MINING ACTIVE</span>
+                <!-- Eyebrow & Status Row -->
+                <div class="mining-eyebrow-row">
+                  <div class="mining-station-eyebrow">
+                    <span>⚡</span> MINING STATION
+                  </div>
+                  <div class="mining-status-badge" data-status="active">
+                    <span class="status-dot"></span>
+                    <span>● MINING ACTIVE</span>
+                  </div>
                 </div>
-                <h2 class="mining-heading">Start Mining <span class="gradient-word">Start Earning</span></h2>
-                <p class="mining-subtext">Activate your session to earn VEs while staying engaged.</p>
+
+                <h2 class="mining-heading">
+                  <span class="heading-line">START MINING.</span>
+                  <span class="heading-line accent-gold">START EARNING.</span>
+                </h2>
+                <p class="mining-subtext">Activate your mining session and earn VEs while progressing toward your next achievement.</p>
+
+                <!-- 6-Stage Journey -->
+                <div class="mining-stage-journey" aria-label="Mining Stage Progression">
+                  <div class="stage-step completed"><div class="stage-step-dot">✓</div><span class="stage-step-label">Start</span></div>
+                  <span class="stage-step-arrow">→</span>
+                  <div class="stage-step completed"><div class="stage-step-dot">✓</div><span class="stage-step-label">Mine</span></div>
+                  <span class="stage-step-arrow">→</span>
+                  <div class="stage-step completed"><div class="stage-step-dot">✓</div><span class="stage-step-label">Earn</span></div>
+                  <span class="stage-step-arrow">→</span>
+                  <div class="stage-step active"><div class="stage-step-dot">4</div><span class="stage-step-label">Progress</span></div>
+                  <span class="stage-step-arrow">→</span>
+                  <div class="stage-step upcoming"><div class="stage-step-dot">5</div><span class="stage-step-label">Achieve</span></div>
+                  <span class="stage-step-arrow">→</span>
+                  <div class="stage-step upcoming"><div class="stage-step-dot">6</div><span class="stage-step-label">Unlock</span></div>
+                </div>
 
                 <div class="mining-telemetry-grid">
                   <div class="telemetry-tile">
@@ -852,10 +934,15 @@
                   </div>
                   <div class="telemetry-tile">
                     <div class="telemetry-label-row">
-                      <span>VE Reward Indicator</span>
+                      <span>Current Reward</span>
+                      <span style="color:var(--text-gold);">VE Yield</span>
                     </div>
                     <div class="telemetry-val-row">
                       <span class="telemetry-val-primary gold">+38 VEs</span>
+                      <span class="telemetry-val-sub" style="color:var(--gem-emerald-light);">Auto-credited</span>
+                    </div>
+                    <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); margin-top:6px;">
+                      Rate: +1.2 VE/min • Node Flux: 98.4 GH/s
                     </div>
                   </div>
                 </div>
@@ -864,6 +951,27 @@
                   <button class="btn-mining-cta active-mining">
                     MINE NOW <span class="cta-arrow">⚡</span>
                   </button>
+                  <div class="session-badge-mini">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Cycle: 60 Mins</span>
+                  </div>
+                </div>
+
+                <!-- Next Achievement Card -->
+                <div class="mining-next-achievement-card">
+                  <div class="next-badge-icon-box">
+                    <img src="assets/badges/02-silver-rising-star.svg" alt="Silver" />
+                  </div>
+                  <div class="next-badge-meta">
+                    <div class="next-badge-eyebrow">NEXT ACHIEVEMENT</div>
+                    <div class="next-badge-title">Level 02 Silver • Rising Star</div>
+                  </div>
+                  <div class="next-badge-progress-tag">
+                    Progress: 75%
+                  </div>
                 </div>
               </div>
 
@@ -872,10 +980,10 @@
                   <div class="reactor-svg-wrapper">
                     <svg viewBox="0 0 400 340" fill="none">
                       <circle cx="200" cy="150" r="75" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="24 16" class="ring-spin-cw"/>
-                      <circle cx="200" cy="150" r="55" stroke="#f59e0b" stroke-width="2" stroke-dasharray="16 12" class="ring-spin-ccw"/>
+                      <circle cx="200" cy="150" r="55" stroke="#F2A900" stroke-width="2" stroke-dasharray="16 12" class="ring-spin-ccw"/>
                       <circle cx="200" cy="150" r="38" fill="#38bdf8" opacity="0.3" class="core-pulse"/>
-                      <circle cx="200" cy="148" r="28" fill="#f59e0b" stroke="#fff" stroke-width="1.5" class="floating-ve-coin"/>
-                      <text x="190" y="153" fill="#fff" font-family="monospace" font-size="14" font-weight="bold">VE</text>
+                      <circle cx="200" cy="148" r="28" fill="#F2A900" stroke="#fff" stroke-width="1.5" class="floating-ve-coin"/>
+                      <text x="190" y="153" fill="#161827" font-family="monospace" font-size="14" font-weight="bold">VE</text>
                     </svg>
                   </div>
                 </div>
@@ -1397,6 +1505,7 @@
             </button>
             <button class="btn-primary" id="testModalBtn">Unlock Modal (Legend)</button>
             <button class="btn-secondary" id="testToastBtn">Toast Notification</button>
+            <button class="btn-secondary" id="resetProgressionProtoBtn" title="Reset all achievements to start fresh from Level 01">↺ Reset to Level 01</button>
           </div>
         </div>
       </div>
@@ -1491,20 +1600,26 @@
                   </div>
                   <div class="mining-banner-content" style="padding: var(--space-5) var(--space-6);">
                     <div class="mining-col-left">
-                      <div class="mining-status-badge">
-                        <span class="status-dot"></span>
-                        <span>● MINING ACTIVE</span>
+                      <div class="mining-eyebrow-row" style="margin-bottom:6px;">
+                        <div class="mining-station-eyebrow" style="font-size:9px; padding:2px 8px;">
+                          <span>⚡</span> MINING STATION
+                        </div>
+                        <div class="mining-status-badge" data-status="active" style="padding:2px 10px; font-size:10px;">
+                          <span class="status-dot"></span>
+                          <span>● MINING ACTIVE</span>
+                        </div>
                       </div>
-                      <h3 style="font-family:var(--font-display); font-size:24px; font-weight:700; color:#fff;">
-                        Start Mining <span style="color:var(--text-gold);">Start Earning</span>
+                      <h3 class="mining-heading" style="font-size:20px; margin-bottom:4px;">
+                        <span class="heading-line">START MINING.</span>
+                        <span class="heading-line accent-gold">START EARNING.</span>
                       </h3>
-                      <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">
+                      <p style="font-size:11px; color:var(--text-secondary); margin-bottom:10px;">
                         Activate your session to earn VEs while staying engaged.
                       </p>
-                      <div class="mining-progress-track" style="margin-bottom:14px;">
+                      <div class="mining-progress-track" style="margin-bottom:12px; height:6px;">
                         <div class="mining-progress-fill" style="width: 75%;"></div>
                       </div>
-                      <button class="btn-mining-cta active-mining" style="padding: 10px 20px; font-size:13px;">
+                      <button class="btn-mining-cta active-mining" style="padding: 9px 18px; font-size:12px; min-height:40px;">
                         MINE NOW <span class="cta-arrow">⚡</span>
                       </button>
                     </div>
@@ -1955,29 +2070,37 @@
       <canvas id="modalConfettiCanvas" class="modal-confetti-canvas"></canvas>
 
       <div class="modal-inner-content">
-        <div class="modal-pretitle">Achievement Unlocked!</div>
+        <div class="modal-pretitle">★ ACHIEVEMENT UNLOCKED ★</div>
 
         <div class="modal-badge-showcase">
-          <img id="modalBadgeImage" src="assets/badges/03-gold-reward-hunter.svg" alt="Badge Preview" />
+          <img id="modalBadgeImage" src="assets/badges/01-bronze-first-step.svg" alt="Badge Preview" />
         </div>
 
-        <h3 id="modalBadgeTitle" class="modal-badge-title">Gold — Reward Hunter</h3>
+        <div id="modalBadgeLevelTier" class="modal-badge-tier-tag">LEVEL 01 • BRONZE</div>
+        <h2 id="modalBadgeTitle" class="modal-badge-title">First Step</h2>
+
+        <div id="modalStatusPill" class="modal-status-pill">✓ UNLOCKED</div>
+
         <p id="modalBadgeSubtitle" class="modal-badge-subtitle">
-          Congratulations! You've unlocked Level 03. Persistent mining and high yield achievements recognized.
+          Mining milestone completed.
         </p>
+
+        <div id="modalRewardHighlight" class="modal-reward-highlight">
+          +38 VEs earned
+        </div>
 
         <!-- Unlocked Perks List -->
         <div id="modalRewardPills" class="modal-reward-pills">
-          <div class="modal-reward-item">✓ +5% Mining Hash Boost</div>
-          <div class="modal-reward-item">✓ Priority Mining Pool</div>
+          <div class="modal-reward-item">✓ +1% Mining Hash Boost</div>
+          <div class="modal-reward-item">✓ Access to Community Channels</div>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: var(--space-2);">
-          <button id="modalProgressionBtn" class="btn-primary" style="width: 100%; justify-content: center; font-size: 15px; padding: 14px 24px;">
-            View Badge Progression →
+          <button id="modalContinueBtn" class="btn-primary modal-continue-btn" style="width: 100%; justify-content: center; font-size: 16px; font-weight: 700; padding: 15px 24px;">
+            CONTINUE →
           </button>
-          <button id="modalContinueBtn" class="btn-secondary" style="width: 100%; justify-content: center; font-size: 14px; padding: 12px 24px;">
-            Continue Mining ⚡
+          <button id="modalProgressionBtn" class="btn-secondary modal-secondary-btn" style="width: 100%; justify-content: center; font-size: 13px; padding: 10px 20px;">
+            View in Badge Collection
           </button>
         </div>
       </div>

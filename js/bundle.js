@@ -185,12 +185,13 @@
 
     getDefaultState() {
       return {
-        miningStatus: 'idle', // 'idle' | 'active' | 'completed'
+        miningStatus: 'idle', // 'idle' | 'active' | 'completed' | 'unlocked'
         miningProgress: 0, // 0 to 100
         earnedVEs: 0, // VEs in current burst/session
         totalVEBalance: 0, // cumulative balance
         currentMiningStage: 1, // 1: Start Mining, 2: Mining Active, 3: Progressing, 4: Reward Earned, 5: Achievement Unlocked, 6: Next Badge Progress
         unlockedBadges: [], // e.g. ['badge-01']
+        newlyUnlockedBadgeId: null,
         currentBadgeLevel: 0, // highest unlocked level (0 = none)
         nextBadgeLevel: 1, // next target level (1 = Bronze)
         sessionStarted: false,
@@ -203,6 +204,11 @@
       this.userId = this.getCurrentUserId();
       const key = this.storagePrefix + this.userId;
       try {
+        if (typeof window !== 'undefined' && window.location && window.location.search.includes('reset=true')) {
+          localStorage.removeItem(key);
+          return this.getDefaultState();
+        }
+
         const saved = localStorage.getItem(key);
         if (saved) {
           const parsed = JSON.parse(saved);
@@ -211,12 +217,48 @@
             parsed.miningProgress = 0;
             parsed.sessionStarted = false;
           }
+
+          // 1. Sanitize & deduplicate unlockedBadges
+          if (Array.isArray(parsed.unlockedBadges)) {
+            parsed.unlockedBadges = [...new Set(parsed.unlockedBadges.filter(id => BADGE_DATA.some(b => b.id === id)))];
+          } else {
+            parsed.unlockedBadges = [];
+          }
+
+          // 2. Derive currentBadgeLevel strictly from unlocked badges
+          const unlockedLevels = parsed.unlockedBadges.map(id => {
+            const b = BADGE_DATA.find(x => x.id === id);
+            return b ? b.level : 0;
+          });
+          const highestUnlockedLevel = unlockedLevels.length > 0 ? Math.max(...unlockedLevels) : 0;
+          parsed.currentBadgeLevel = highestUnlockedLevel;
+
+          // 3. Derive nextBadgeLevel strictly from the next locked badge in sequence
+          const nextLockedBadge = BADGE_DATA.find(b => !parsed.unlockedBadges.includes(b.id));
+          parsed.nextBadgeLevel = nextLockedBadge ? nextLockedBadge.level : 1;
+
+          // 4. Validate newlyUnlockedBadgeId
+          if (parsed.newlyUnlockedBadgeId && !parsed.unlockedBadges.includes(parsed.newlyUnlockedBadgeId)) {
+            parsed.newlyUnlockedBadgeId = null;
+          }
+
           return Object.assign(this.getDefaultState(), parsed);
         }
       } catch (e) {
         console.warn('Could not load mining state', e);
       }
       return this.getDefaultState();
+    }
+
+    resetProgression() {
+      this.userId = this.getCurrentUserId();
+      const key = this.storagePrefix + this.userId;
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {}
+      this.state = this.getDefaultState();
+      this.syncBadgeDataWithState();
+      this.notify();
     }
 
     saveState() {
@@ -244,7 +286,13 @@
 
     syncBadgeDataWithState() {
       BADGE_DATA.forEach(badge => {
-        badge.status = this.state.unlockedBadges.includes(badge.id) ? 'unlocked' : 'locked';
+        if (this.state.newlyUnlockedBadgeId === badge.id) {
+          badge.status = 'newly_unlocked';
+        } else if (this.state.unlockedBadges.includes(badge.id)) {
+          badge.status = 'unlocked';
+        } else {
+          badge.status = 'locked';
+        }
       });
     }
 
@@ -253,15 +301,13 @@
 
       this.state.miningStatus = 'active';
       this.state.sessionStarted = true;
-      this.state.currentMiningStage = 2; // Stage 2: Mining Active
+      this.state.currentMiningStage = 1; // Stage 1: Start
       this.state.miningProgress = 0;
       this.state.earnedVEs = 0;
       this.state.sessionRemainingTime = 60;
       this.notify();
 
       if (window.playSfx) window.playSfx('mine');
-
-      this.state.currentMiningStage = 3; // Stage 3: Progressing
 
       const totalSteps = 45; // ~4.5 seconds of high-energy extraction
       let step = 0;
@@ -270,69 +316,109 @@
       clearInterval(this.miningInterval);
       this.miningInterval = setInterval(() => {
         step++;
-        const progressPercent = Math.min(100, Math.round((step / totalSteps) * 100));
+        const progressPercent = Math.min(100, Math.max(0, Math.round((step / totalSteps) * 100)));
         this.state.miningProgress = progressPercent;
 
         if (progressPercent >= 75) {
           this.state.earnedVEs = sessionQuotaVE;
+          this.state.currentMiningStage = 4; // Stage 4: Progress
         } else if (progressPercent >= 45) {
           this.state.earnedVEs = 25;
+          this.state.currentMiningStage = 3; // Stage 3: Earn
         } else if (progressPercent >= 20) {
           this.state.earnedVEs = 10;
+          this.state.currentMiningStage = 2; // Stage 2: Mine
         } else {
           this.state.earnedVEs = 0;
+          this.state.currentMiningStage = 1; // Stage 1: Start
         }
 
         this.state.sessionRemainingTime = Math.max(0, 60 - Math.round(step * 1.3));
 
-        this.notify();
-
         if (progressPercent >= 100) {
           clearInterval(this.miningInterval);
-          this.completeMiningSession(sessionQuotaVE, onMilestoneReached);
+          this.state.miningProgress = 100;
+          this.state.currentMiningStage = 6; // Both Stage 5 (Achieve) and Stage 6 (Unlock) active/completed!
+          this.completeMiningMilestone(sessionQuotaVE, onMilestoneReached);
+        } else {
+          this.notify();
         }
       }, 100);
     }
 
-    completeMiningSession(sessionRewardVE, onMilestoneReached) {
-      this.state.miningStatus = 'completed';
+    completeMiningMilestone(sessionRewardVE, onMilestoneReached) {
       this.state.miningProgress = 100;
       this.state.earnedVEs = sessionRewardVE;
-      this.state.totalVEBalance += sessionRewardVE;
       this.state.sessionsCompleted += 1;
-      this.state.currentMiningStage = 4; // Stage 4: Reward Earned
+      this.state.miningStatus = 'unlocked';
+      this.state.currentMiningStage = 6; // Stage 6: UNLOCK active!
 
-      if (window.playSfx) window.playSfx('complete');
-
-      // Determine next badge to unlock
-      const targetBadgeIndex = this.state.unlockedBadges.length;
+      // Identify the next locked badge sequentially
+      const targetBadge = BADGE_DATA.find(b => !this.state.unlockedBadges.includes(b.id));
       let unlockedBadge = null;
 
-      if (targetBadgeIndex < BADGE_DATA.length) {
-        const nextBadge = BADGE_DATA[targetBadgeIndex];
-        this.state.unlockedBadges.push(nextBadge.id);
-        this.state.currentBadgeLevel = nextBadge.level;
-        this.state.nextBadgeLevel = Math.min(10, nextBadge.level + 1);
-        unlockedBadge = nextBadge;
-        this.state.currentMiningStage = 5; // Stage 5: Achievement Unlocked
+      if (targetBadge) {
+        if (!this.state.unlockedBadges.includes(targetBadge.id)) {
+          this.state.unlockedBadges.push(targetBadge.id);
+        }
+        this.state.newlyUnlockedBadgeId = targetBadge.id;
+        this.state.currentBadgeLevel = targetBadge.level;
+
+        // Calculate next upcoming badge target
+        const upcomingBadge = BADGE_DATA.find(b => !this.state.unlockedBadges.includes(b.id));
+        this.state.nextBadgeLevel = upcomingBadge ? upcomingBadge.level : 10;
+
+        unlockedBadge = targetBadge;
+      } else {
+        unlockedBadge = BADGE_DATA[BADGE_DATA.length - 1];
+        this.state.newlyUnlockedBadgeId = unlockedBadge.id;
       }
 
       this.notify();
 
+      if (window.playSfx) window.playSfx('unlock');
+
       setTimeout(() => {
         if (onMilestoneReached && unlockedBadge) {
           onMilestoneReached(unlockedBadge);
+        } else if (window.interactionsEngine && unlockedBadge) {
+          window.interactionsEngine.openModal(unlockedBadge.id);
         }
-      }, 450);
+      }, 200);
     }
 
-    continueMiningStage() {
+    claimRewardAndAdvance() {
+      // 1. Credit earned reward to balance
+      this.state.totalVEBalance += (this.state.earnedVEs || 38);
+
+      // 2. Transition newly unlocked badge to permanent unlocked
+      this.state.newlyUnlockedBadgeId = null;
+
+      // 3. Reset station to Idle (Stage 1: Start ready) for next session
       this.state.miningStatus = 'idle';
-      this.state.currentMiningStage = 6; // Stage 6: Next Badge Progress
+      this.state.currentMiningStage = 1;
       this.state.sessionStarted = false;
       this.state.miningProgress = 0;
       this.state.earnedVEs = 0;
+      this.state.sessionRemainingTime = 60;
+
+      // 4. Re-derive next badge level
+      const nextLockedBadge = BADGE_DATA.find(b => !this.state.unlockedBadges.includes(b.id));
+      this.state.nextBadgeLevel = nextLockedBadge ? nextLockedBadge.level : 10;
+
+      if (window.playSfx) window.playSfx('claim');
       this.notify();
+    }
+
+    dismissNewlyUnlocked() {
+      if (this.state.newlyUnlockedBadgeId) {
+        this.state.newlyUnlockedBadgeId = null;
+        this.notify();
+      }
+    }
+
+    continueMiningStage() {
+      this.claimRewardAndAdvance();
     }
   }
 
@@ -432,6 +518,8 @@
                 }
               }
             );
+          } else if (s.miningStatus === 'completed' || s.miningStatus === 'unlocked') {
+            this.stateManager.claimRewardAndAdvance();
           }
         });
       }
@@ -449,11 +537,60 @@
     applyVisualPreset(preset) {
       const card = document.getElementById('miningBannerCard');
       if (card) card.setAttribute('data-state', preset);
+
+      const currentState = this.stateManager.state;
+      if (preset === 'default') {
+        this.renderState({
+          ...currentState,
+          miningStatus: 'idle',
+          miningProgress: 0,
+          earnedVEs: 0,
+          currentMiningStage: 1,
+          sessionRemainingTime: 60
+        });
+      } else if (preset === 'hover') {
+        this.renderState({
+          ...currentState,
+          miningStatus: 'hover',
+          miningProgress: 5,
+          earnedVEs: 0,
+          currentMiningStage: 1,
+          sessionRemainingTime: 60
+        });
+      } else if (preset === 'active') {
+        this.renderState({
+          ...currentState,
+          miningStatus: 'active',
+          miningProgress: 75,
+          earnedVEs: 38,
+          currentMiningStage: 4,
+          sessionRemainingTime: 45
+        });
+      } else if (preset === 'completed') {
+        this.renderState({
+          ...currentState,
+          miningStatus: 'completed',
+          miningProgress: 100,
+          earnedVEs: 38,
+          currentMiningStage: 6, // Stage 6: UNLOCK active!
+          sessionRemainingTime: 0
+        });
+      } else if (preset === 'unlocked') {
+        this.renderState({
+          ...currentState,
+          miningStatus: 'unlocked',
+          miningProgress: 100,
+          earnedVEs: 38,
+          currentMiningStage: 6, // Stage 6: UNLOCK active!
+          sessionRemainingTime: 0
+        });
+      }
     }
 
     renderState(state) {
       const card = document.getElementById('miningBannerCard');
       const ctaBtn = document.getElementById('primaryMiningCta');
+      const statusBadge = document.getElementById('miningStatusBadge');
       const statusText = document.getElementById('miningStatusText');
       const progressText = document.getElementById('miningProgressText');
       const progressFill = document.getElementById('miningProgressFill');
@@ -461,48 +598,103 @@
       const ringIcon = document.getElementById('ringMiniIcon');
       const timeText = document.getElementById('miningTimeText');
       const rewardText = document.getElementById('miningRewardText');
+      const rateText = document.getElementById('miningRateText');
+      const fluxText = document.getElementById('miningFluxText');
       const subtext = document.getElementById('miningSubtext');
       const machineReward = document.getElementById('machineScreenReward');
       const machineStatus = document.getElementById('machineStatusIndicator');
 
-      const nextBadge = BADGE_DATA.find(b => b.level === state.nextBadgeLevel) || BADGE_DATA[0];
+      // Next Achievement Preview: strictly finds first locked badge
+      const nextBadge = BADGE_DATA.find(b => !state.unlockedBadges.includes(b.id)) || BADGE_DATA[0];
+      const nextBadgeImg = document.getElementById('miningNextBadgeImg');
+      const nextBadgeTitle = document.getElementById('miningNextBadgeTitle');
+      const nextBadgeProgress = document.getElementById('miningNextBadgeProgress');
+      const nextEyebrow = document.querySelector('#miningNextAchievementCard .next-badge-eyebrow');
+
+      // Update 6-Stage Journey Breadcrumb
+      const stageSteps = document.querySelectorAll('#miningStageJourney .stage-step');
+      if (stageSteps && stageSteps.length > 0) {
+        const curStage = state.currentMiningStage || 1;
+        const isFinished = state.miningProgress >= 100 || state.miningStatus === 'unlocked' || state.miningStatus === 'completed';
+
+        stageSteps.forEach((stepEl, idx) => {
+          const stepNum = idx + 1;
+          const dot = stepEl.querySelector('.stage-step-dot');
+          stepEl.classList.remove('completed', 'active', 'upcoming', 'active-unlock');
+
+          if (isFinished) {
+            // When 100% / unlocked: Stages 1-5 completed with checkmark; Stage 6 active with checkmark & gold glow!
+            if (stepNum < 6) {
+              stepEl.classList.add('completed');
+              if (dot) dot.textContent = '✓';
+            } else {
+              stepEl.classList.add('active', 'active-unlock');
+              if (dot) dot.textContent = '✓';
+            }
+          } else {
+            if (stepNum < curStage) {
+              stepEl.classList.add('completed');
+              if (dot) dot.textContent = '✓';
+            } else if (stepNum === curStage) {
+              stepEl.classList.add('active');
+              if (dot) dot.textContent = String(stepNum);
+            } else {
+              stepEl.classList.add('upcoming');
+              if (dot) dot.textContent = String(stepNum);
+            }
+          }
+        });
+      }
 
       if (state.miningStatus === 'idle') {
         if (card) card.setAttribute('data-state', 'default');
-        if (statusText) statusText.textContent = '● STANDBY';
+        if (statusBadge) statusBadge.setAttribute('data-status', 'idle');
+        if (statusText) statusText.textContent = '● READY TO MINE';
         if (progressText) progressText.textContent = `${state.miningProgress}%`;
         if (progressFill) progressFill.style.width = `${state.miningProgress}%`;
         if (ringFill) ringFill.style.strokeDashoffset = '113.1';
         if (ringIcon) ringIcon.textContent = '⚡';
         if (timeText) timeText.textContent = '60:00 standby';
         if (rewardText) rewardText.textContent = `+${state.earnedVEs} VEs`;
+        if (rateText) rateText.textContent = 'Rate: +1.2 VE/min • Standby';
+        if (fluxText) fluxText.textContent = 'Node Flux: 98.4 GH/s';
         if (machineReward) machineReward.textContent = `+${state.earnedVEs} VE`;
         if (machineStatus) {
           const txt = machineStatus.querySelector('text');
-          if (txt) txt.textContent = 'STANDBY';
+          if (txt) txt.textContent = 'READY TO MINE';
+        }
+        if (nextEyebrow) nextEyebrow.textContent = 'NEXT ACHIEVEMENT';
+        if (nextBadgeImg) nextBadgeImg.src = nextBadge.assetPath;
+        if (nextBadgeTitle) {
+          if (state.unlockedBadges.length >= 10) {
+            nextBadgeTitle.textContent = `All 10 Tiers Mastered • Legend Apex`;
+          } else {
+            nextBadgeTitle.textContent = `${nextBadge.levelDisplay} ${nextBadge.tier} • ${nextBadge.name}`;
+          }
+        }
+        if (nextBadgeProgress) {
+          nextBadgeProgress.textContent = state.unlockedBadges.length >= 10 ? 'All Badges Mastered (100%)' : `Target: Level 0${nextBadge.level} • 0%`;
         }
         if (subtext) {
-          if (state.currentMiningStage === 6) {
-            subtext.textContent = `Target: Level 0${nextBadge.level} ${nextBadge.tier} (${nextBadge.name}). Continue mining to unlock!`;
-          } else {
-            subtext.textContent = 'Activate your session to earn VEs while staying engaged.';
-          }
+          subtext.textContent = 'Activate your mining session and earn VEs while progressing toward your next achievement.';
         }
         if (ctaBtn) {
           ctaBtn.className = 'btn-mining-cta';
           ctaBtn.disabled = false;
           ctaBtn.style.pointerEvents = 'auto';
           ctaBtn.style.opacity = '1';
-          if (state.currentMiningStage === 6) {
-            ctaBtn.innerHTML = `CONTINUE MINING <span class="cta-arrow">⚡</span>`;
-          } else {
-            ctaBtn.innerHTML = `MINE NOW <span class="cta-arrow">⚡</span>`;
-          }
+          ctaBtn.innerHTML = `MINE NOW <span class="cta-arrow">⚡</span>`;
         }
+      } else if (state.miningStatus === 'hover') {
+        if (card) card.setAttribute('data-state', 'hover');
+        if (statusBadge) statusBadge.setAttribute('data-status', 'hover');
+        if (statusText) statusText.textContent = '● READY TO MINE';
+        if (subtext) subtext.textContent = 'Click MINE NOW to spin up quantum reactor coils and start stream.';
       } else if (state.miningStatus === 'active') {
         if (card) card.setAttribute('data-state', 'active');
+        if (statusBadge) statusBadge.setAttribute('data-status', 'active');
         if (statusText) statusText.textContent = '● MINING ACTIVE';
-        if (subtext) subtext.textContent = `Mining in progress... target: Level 0${nextBadge.level} ${nextBadge.name}.`;
+        if (subtext) subtext.textContent = `Quantum extraction active. Streaming VEs towards Level 0${nextBadge.level} ${nextBadge.name}.`;
         if (progressText) progressText.textContent = `${state.miningProgress}%`;
         if (progressFill) progressFill.style.width = `${state.miningProgress}%`;
         if (ringFill) {
@@ -510,39 +702,76 @@
           ringFill.style.strokeDashoffset = offset.toFixed(1);
         }
         if (ringIcon) ringIcon.textContent = '⚡';
-        if (timeText) timeText.textContent = `${state.sessionRemainingTime}s remaining`;
+        const mins = Math.floor(state.sessionRemainingTime / 60);
+        const secs = state.sessionRemainingTime % 60;
+        const timeFormatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} remaining`;
+        if (timeText) timeText.textContent = state.sessionRemainingTime > 60 ? timeFormatted : `${state.sessionRemainingTime}s remaining`;
         if (rewardText) rewardText.textContent = `+${state.earnedVEs} VEs`;
+        if (rateText) rateText.textContent = `Rate: +1.2 VE/min • Burst in 0:0${Math.max(1, 8 - (state.miningProgress % 8))}s`;
+        if (fluxText) fluxText.textContent = 'Node Flux: 98.4 GH/s';
         if (machineReward) machineReward.textContent = `+${state.earnedVEs} VE`;
         if (machineStatus) {
           const txt = machineStatus.querySelector('text');
           if (txt) txt.textContent = 'MINING ACTIVE';
         }
+        if (nextEyebrow) nextEyebrow.textContent = 'NEXT ACHIEVEMENT';
+        if (nextBadgeImg) nextBadgeImg.src = nextBadge.assetPath;
+        if (nextBadgeTitle) {
+          nextBadgeTitle.textContent = `${nextBadge.levelDisplay} ${nextBadge.tier} • ${nextBadge.name}`;
+        }
+        if (nextBadgeProgress) {
+          nextBadgeProgress.textContent = `Progress: ${state.miningProgress}% towards unlock`;
+        }
         if (ctaBtn) {
           ctaBtn.className = 'btn-mining-cta active-mining';
           ctaBtn.disabled = true;
           ctaBtn.style.pointerEvents = 'none';
-          ctaBtn.style.opacity = '0.85';
-          ctaBtn.innerHTML = `MINING... <span class="cta-arrow">⚡</span>`;
+          ctaBtn.style.opacity = '0.9';
+          ctaBtn.innerHTML = `MINING IN PROGRESS... <span class="cta-arrow">⚡</span>`;
         }
-      } else if (state.miningStatus === 'completed') {
-        if (card) card.setAttribute('data-state', 'completed');
-        if (statusText) statusText.textContent = '● QUOTA ACHIEVED';
-        if (subtext) subtext.textContent = `Full extraction quota achieved! +${state.earnedVEs} VEs credited.`;
+      } else if (state.miningStatus === 'completed' || state.miningStatus === 'unlocked') {
+        if (card) card.setAttribute('data-state', state.miningStatus);
+        if (statusBadge) statusBadge.setAttribute('data-status', state.miningStatus);
+        if (statusText) statusText.textContent = state.miningStatus === 'unlocked' ? '● ACHIEVEMENT UNLOCKED' : '● REWARD READY';
+
+        const unlockedB = BADGE_DATA.find(b => b.id === state.newlyUnlockedBadgeId) || 
+                          BADGE_DATA.find(b => b.level === state.currentBadgeLevel) ||
+                          BADGE_DATA[0];
+
+        const upcomingBadge = BADGE_DATA.find(b => !state.unlockedBadges.includes(b.id));
+
+        if (subtext) {
+          subtext.textContent = `Milestone achieved! ${unlockedB.levelDisplay} ${unlockedB.tier} unlocked. Claim your +${state.earnedVEs || 38} VEs yield below.`;
+        }
         if (progressText) progressText.textContent = '100%';
         if (progressFill) progressFill.style.width = '100%';
         if (ringFill) ringFill.style.strokeDashoffset = '0';
         if (ringIcon) ringIcon.textContent = '✓';
-        if (timeText) timeText.textContent = 'Milestone Reached (00:00)';
-        if (rewardText) rewardText.textContent = `+${state.earnedVEs} VEs`;
-        if (machineReward) machineReward.textContent = `+${state.earnedVEs} VE`;
+        if (timeText) timeText.textContent = '00:00 (Completed)';
+        if (rewardText) rewardText.textContent = `+${state.earnedVEs || 38} VEs`;
+        if (rateText) rateText.textContent = `Quota Reached: +${state.earnedVEs || 38} VEs Ready to Claim`;
+        if (machineReward) machineReward.textContent = `+${state.earnedVEs || 38} VE`;
         if (machineStatus) {
           const txt = machineStatus.querySelector('text');
-          if (txt) txt.textContent = 'QUOTA MET';
+          if (txt) txt.textContent = 'ACHIEVEMENT UNLOCKED';
         }
+
+        // Section 13: Feature the unlocked badge prominently in the banner!
+        if (nextEyebrow) nextEyebrow.textContent = '★ ACHIEVEMENT UNLOCKED';
+        if (nextBadgeImg) nextBadgeImg.src = unlockedB.assetPath;
+        if (nextBadgeTitle) nextBadgeTitle.textContent = `${unlockedB.tier} — ${unlockedB.name} ✓`;
+        if (nextBadgeProgress) {
+          nextBadgeProgress.textContent = upcomingBadge 
+            ? `+${state.earnedVEs || 38} VEs • NEXT: ${upcomingBadge.levelDisplay} ${upcomingBadge.tier}`
+            : `+${state.earnedVEs || 38} VEs • All Badges Mastered!`;
+        }
+
         if (ctaBtn) {
           ctaBtn.className = 'btn-mining-cta claim-rewards';
-          ctaBtn.disabled = true;
-          ctaBtn.innerHTML = `REWARD EARNED (+${state.earnedVEs} VE) <span class="cta-arrow">✓</span>`;
+          ctaBtn.disabled = false;
+          ctaBtn.style.pointerEvents = 'auto';
+          ctaBtn.style.opacity = '1';
+          ctaBtn.innerHTML = `CLAIM +${state.earnedVEs || 38} VEs & CONTINUE <span class="cta-arrow">✓</span>`;
         }
       }
     }
@@ -607,7 +836,7 @@
         </div>
         <div class="tooltip-req"><strong>Requirement:</strong> ${badge.requirement}</div>
         <div class="tooltip-req" style="margin-top:2px;">
-          <strong>Status:</strong> <span style="color:${badge.status === 'unlocked' ? '#34d399' : '#94a3b8'}">${badge.status === 'unlocked' ? 'Unlocked ✓' : 'Locked 🔒'}</span>
+          <strong>Status:</strong> <span style="color:${badge.status === 'newly_unlocked' ? '#F2A900' : (badge.status === 'unlocked' ? '#34d399' : '#94a3b8')}">${badge.status === 'newly_unlocked' ? 'Newly Unlocked ★' : (badge.status === 'unlocked' ? 'Unlocked ✓' : 'Locked 🔒')}</span>
         </div>
         <div class="tooltip-desc" style="margin-top:6px;">${badge.description}</div>
       `;
@@ -654,6 +883,9 @@
       if (continueBtn) {
         continueBtn.addEventListener('click', () => {
           this.closeModal();
+          if (window.miningStateManager) {
+            window.miningStateManager.claimRewardAndAdvance();
+          }
           const tabBtn = document.querySelector('[data-tab="mining-banner"]');
           if (tabBtn) tabBtn.click();
           const target = document.getElementById('miningBannerCard');
@@ -663,22 +895,33 @@
 
       if (this.modalElem) {
         this.modalElem.addEventListener('click', (e) => {
-          if (e.target === this.modalElem) this.closeModal();
+          if (e.target === this.modalElem) {
+            this.closeModal();
+            if (window.miningStateManager) {
+              window.miningStateManager.claimRewardAndAdvance();
+            }
+          }
         });
       }
     }
 
-    openModal(badgeId = 'badge-03') {
-      const badge = getBadgeById(badgeId) || BADGE_DATA[2];
+    openModal(badgeId = 'badge-01') {
+      const badge = getBadgeById(badgeId) || BADGE_DATA[0];
       if (!this.modalElem) return;
 
       const modalTitle = document.getElementById('modalBadgeTitle');
+      const modalLevelTier = document.getElementById('modalBadgeLevelTier');
+      const modalStatusPill = document.getElementById('modalStatusPill');
       const modalSubtitle = document.getElementById('modalBadgeSubtitle');
+      const modalRewardHighlight = document.getElementById('modalRewardHighlight');
       const modalImage = document.getElementById('modalBadgeImage');
       const modalPills = document.getElementById('modalRewardPills');
 
-      if (modalTitle) modalTitle.textContent = `${badge.tier} — ${badge.name}`;
-      if (modalSubtitle) modalSubtitle.textContent = `Congratulations! You've unlocked Level 0${badge.level}. ${badge.description}`;
+      if (modalLevelTier) modalLevelTier.textContent = `${badge.levelDisplay.toUpperCase()} • ${badge.tier.toUpperCase()}`;
+      if (modalTitle) modalTitle.textContent = badge.name;
+      if (modalStatusPill) modalStatusPill.textContent = '✓ UNLOCKED';
+      if (modalSubtitle) modalSubtitle.textContent = 'Mining milestone completed.';
+      if (modalRewardHighlight) modalRewardHighlight.textContent = '+38 VEs earned';
       if (modalImage) modalImage.src = badge.assetPath;
 
       if (modalPills && badge.perks) {
@@ -701,8 +944,8 @@
       if (!this.modalElem) return;
       this.modalElem.classList.remove('active');
       this.stopConfetti();
-      if (window.miningStateManager && window.miningStateManager.state.currentMiningStage === 5) {
-        window.miningStateManager.continueMiningStage();
+      if (window.miningStateManager) {
+        window.miningStateManager.dismissNewlyUnlocked();
       }
     }
 
@@ -1082,7 +1325,7 @@
                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                </svg>
              </div>`
-          : `<div class="badge-unlocked-overlay" title="Unlocked">
+          : `<div class="badge-unlocked-overlay" title="${badge.status === 'newly_unlocked' ? 'Newly Unlocked' : 'Unlocked'}">
                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                  <polyline points="20 6 9 17 4 12"></polyline>
                </svg>
@@ -1095,7 +1338,7 @@
         <div class="badge-card-name">${badge.name}</div>
         <div class="badge-card-material">${badge.material}</div>
         <div class="badge-card-status">
-          ${badge.status === 'unlocked' ? '✓ Unlocked' : '🔒 Locked'}
+          ${badge.status === 'newly_unlocked' ? '★ NEWLY UNLOCKED' : (badge.status === 'unlocked' ? '✓ Unlocked' : '🔒 Locked')}
         </div>
       </div>
     `).join('');
@@ -1159,11 +1402,13 @@
     };
 
     const unlockedCount = state.unlockedBadges.length;
+    const nextLockedBadge = BADGE_DATA.find(b => !state.unlockedBadges.includes(b.id));
 
     track.innerHTML = BADGE_DATA.map(badge => {
       const isCompleted = state.unlockedBadges.includes(badge.id);
-      const isActive = !isCompleted && badge.level === state.nextBadgeLevel;
-      const stateClass = isCompleted ? 'completed' : (isActive ? 'active' : 'locked');
+      const isNewlyUnlocked = state.newlyUnlockedBadgeId === badge.id;
+      const isActive = !isCompleted && nextLockedBadge && badge.id === nextLockedBadge.id;
+      const stateClass = isNewlyUnlocked ? 'completed active' : (isCompleted ? 'completed' : (isActive ? 'active' : 'locked'));
 
       return `
         <div class="progression-node ${stateClass}" data-badge-id="${badge.id}" title="${badge.name} (${isCompleted ? 'Unlocked' : (isActive ? 'Next Target' : 'Locked')})">
@@ -1185,7 +1430,7 @@
     if (standing) standing.innerHTML = `<strong style="color:var(--text-gold);">${standingName}</strong>`;
 
     const nextTitle = document.getElementById('progressionNextTitle');
-    const nextBadge = BADGE_DATA.find(b => b.level === state.nextBadgeLevel);
+    const nextBadge = nextLockedBadge;
     if (nextTitle) {
       if (unlockedCount >= 10) {
         nextTitle.textContent = 'All 10 Milestones Achieved!';
@@ -1462,6 +1707,30 @@
       syncDashboardMockup(state);
       updateAuthCrestTier(state);
     });
+
+    // Global Reset Hook for developer / mentor testing
+    window.resetVeloopMiningState = () => {
+      window.miningStateManager.resetProgression();
+      if (window.interactionsEngine) window.interactionsEngine.showToast('badge-01');
+    };
+
+    const resetBtn1 = document.getElementById('resetProgressionBtn');
+    if (resetBtn1) {
+      resetBtn1.addEventListener('click', () => {
+        window.resetVeloopMiningState();
+        const tabBtn = document.querySelector('[data-tab="mining-banner"]');
+        if (tabBtn) tabBtn.click();
+      });
+    }
+
+    const resetBtn2 = document.getElementById('resetProgressionProtoBtn');
+    if (resetBtn2) {
+      resetBtn2.addEventListener('click', () => {
+        window.resetVeloopMiningState();
+        const tabBtn = document.querySelector('[data-tab="mining-banner"]');
+        if (tabBtn) tabBtn.click();
+      });
+    }
 
     // Run Full Flow Prototype Trigger Button in Section 09
     const runFullFlowBtn = document.getElementById('runFullFlowBtn');
